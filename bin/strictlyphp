@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Symfony\Component\Console\Application;
+use Mediadevs\StrictlyPHP\Command\StrictlyCommand;
+
+// Including the composer autoloader
+if (file_exists(__DIR__.'/../../../autoload.php')) {
+    require __DIR__.'/../../../autoload.php';
+} else {
+    require_once __DIR__.'/../vendor/autoload.php';
+}
+
+// Creating the analyser
+$command = new StrictlyCommand();
+
+// Executing the parser
+$analyser = new Application('StrictlyPHP');
+$analyser->add($command);
+$analyser->setDefaultCommand($command->getName());
+
+try {
+    $analyser->run();
+} catch (Exception $e) {
+    // Do nothing.
+}

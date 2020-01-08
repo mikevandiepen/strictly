@@ -1,0 +1,35 @@
+{
+    "name": "mediadevs/strictlyphp",
+    "description": "Enforcing strictly typed PHP OOP",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["Strictly Typed PHP OOP", "OOP", "STRICT"],
+    "authors": [
+        {
+            "name": "Mike van Diepen",
+            "email": "mike.vandiepen@hotmail.com"
+        }
+    ],
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "Mediadevs\\StrictlyPHP\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mediadevs\\StrictlyPHP\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.4",
+        "symfony/yaml": "^4.3",
+        "symfony/finder": "^4.3",
+        "symfony/console": "^4.3",
+        "symfony/process": "^4.3",
+        "nikic/php-parser": "^4.2",
+        "symfony/stopwatch": "^4.3",
+        "phpdocumentor/reflection-docblock": "^4.3"
+    },
+    "bin": ["bin/strictlyphp"]
+}
