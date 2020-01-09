@@ -3,40 +3,13 @@ language: php
 php:
   - 7.4
 
-stages:
-  - strictly
-
 env:
   matrix:
-    - DEPS="high"
-    - DEPS="low"
-  global:
-    - COMPOSER_MEMORY_LIMIT=-1
-    - DEFAULT_COMPOSER_FLAGS="--no-interaction --no-suggest --prefer-source"
+    - COMPOSER_FLAGS="--prefer-lowest"
 
-cache:
-  directories:
-    - ./vendor
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
 
-before_install:
-  - export INI_DIR=~/.phpenv/versions/$(phpenv version-name)/etc/conf.d
-  - echo memory_limit = 1G >> $INI_DIR/travis.ini
-  - if [[ -f $INI_DIR/xdebug.ini ]]; then phpenv config-rm xdebug.ini; fi
-  - composer clear-cache
-
-install:
-  - if [[ "$DEPS" = 'high' ]]; then travis_retry composer $DEFAULT_COMPOSER_FLAGS update; fi
-  - if [[ "$DEPS" = 'low' ]]; then travis_retry composer $DEFAULT_COMPOSER_FLAGS --prefer-lowest --prefer-stable update; fi
-
-matrix:
-  fast_finish: true
-
-jobs:
-  include:
-    - stage: strictly
-      php: 7.4
-      script:
-        - bin/strictly
-
-notifications:
-  email: false
+script:
+  - vendor/bin/strictly

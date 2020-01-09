@@ -31,5 +31,8 @@
         "symfony/stopwatch": "^4.3",
         "phpdocumentor/reflection-docblock": "^4.3"
     },
+    "require-dev": {
+        "mikevandiepen/strictly": "dev-master"
+    },
     "bin": ["bin/strictly"]
 }
