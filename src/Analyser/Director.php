@@ -24,14 +24,30 @@ use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseArrowFunction;
 final class Director
 {
     /**
+     * The subject file of the analysis.
+     *
+     * @var \Mediadevs\StrictlyPHP\Parser\File
+     */
+    private File $file;
+
+    /**
+     * Director constructor.
+     *
+     * @param \Mediadevs\StrictlyPHP\Parser\File $file
+     */
+    public function __construct(File $file)
+    {
+        $this->file = $file;
+    }
+
+    /**
      * Asserting based upon the filters what the analysis strategy will be.
      *
-     * @param File  $file
      * @param array $filters
      *
      * @return void
      */
-    public function direct(File $file, array $filters): void
+    public function direct(array $filters): void
     {
         $functional             = (bool) isset($filters['functional']);
         $docblock               = (bool) isset($filters['docblock']);
@@ -40,7 +56,7 @@ final class Director
         $returnFunctional       = (bool) ($functional)  ? (isset($filters['return-functional']))    : false;
         $returnDocblock         = (bool) ($docblock)    ? (isset($filters['parameter-docblock']))   : false;
 
-        foreach ($file->arrowFunctionNode as $arrowFunctionNode) {
+        foreach ($this->file->arrowFunctionNode as $arrowFunctionNode) {
             if (isset($filters['arrow-function'])) {
                 $arrowFunctionFunctional = (bool) ($functional) ? isset($filters['arrow-function-functional']) : false;
                 $arrowFunctionDocblock   = (bool) ($docblock) ? isset($filters['arrow-function-docblock']) : false;
@@ -73,7 +89,7 @@ final class Director
             }
         }
 
-        foreach ($file->closureNode as $closureNode) {
+        foreach ($this->file->closureNode as $closureNode) {
             if (isset($filters['closure'])) {
                 $closureFunctional  = (bool) ($functional) ? isset($filters['closure-functional']) : false;
                 $closureDocblock    = (bool) ($docblock) ? isset($filters['closure-docblock']) : false;
@@ -106,7 +122,7 @@ final class Director
             }
         }
 
-        foreach ($file->functionNode as $functionNode) {
+        foreach ($this->file->functionNode as $functionNode) {
             if (isset($filters['function'])) {
                 $functionFunctional = (bool) ($functional) ? isset($filters['function-functional']) : false;
                 $functionDocblock   = (bool) ($docblock) ? isset($filters['function-docblock']) : false;
@@ -139,7 +155,7 @@ final class Director
             }
         }
 
-        foreach ($file->magicMethodNode as $methodNode) {
+        foreach ($this->file->magicMethodNode as $methodNode) {
             if (isset($filters['magic-method'])) {
                 $magicMethodFunctional = (bool) ($functional) ? isset($filters['magic-method-functional']) : false;
                 $magicMethodDocblock   = (bool) ($docblock) ? isset($filters['magic-method-docblock']) : false;
@@ -172,7 +188,7 @@ final class Director
             }
         }
 
-        foreach ($file->methodNode as $methodNode) {
+        foreach ($this->file->methodNode as $methodNode) {
             if (isset($filters['method'])) {
                 $methodFunctional   = (bool) ($functional) ? isset($filters['method-functional']) : false;
                 $methodDocblock     = (bool) ($docblock) ? isset($filters['method-docblock']) : false;
@@ -205,7 +221,7 @@ final class Director
             }
         }
 
-        foreach ($file->propertyNodes as $propertyNode) {
+        foreach ($this->file->propertyNodes as $propertyNode) {
             if (isset($filters['property'])) {
                 $propertyFunctional = (bool) ($functional) ? isset($filters['property-functional']) : false;
                 $propertyDocblock   = (bool) ($docblock) ? isset($filters['property-docblock']) : false;

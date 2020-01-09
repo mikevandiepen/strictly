@@ -78,7 +78,7 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
         $this->setDocblockType($this->getPropertyTypeFromDocblock($docblock));
 
         if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
-            if ($this->typesMatch()) {
+            if (!$this->typesMatch()) {
                 // TODO: (Types do not match).
             }
         } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {

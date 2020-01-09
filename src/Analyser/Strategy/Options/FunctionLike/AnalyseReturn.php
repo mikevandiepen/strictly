@@ -2,7 +2,6 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionLike;
 
-use PhpParser\Node;
 use Mediadevs\StrictlyPHP\Parser\File\AbstractNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AbstractAnalyser;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserInterface;
@@ -81,7 +80,7 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
         $this->setDocblockType($this->getReturnTypeFromDocblock($docblock));
 
         if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
-            if ($this->typesMatch()) {
+            if (!$this->typesMatch()) {
                 // TODO: (Types do not match).
             }
         } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {

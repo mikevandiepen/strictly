@@ -2,7 +2,6 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionLike;
 
-use PhpParser\Node;
 use Mediadevs\StrictlyPHP\Parser\File\AbstractNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AbstractAnalyser;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserInterface;
@@ -86,7 +85,7 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
             $this->setDocblockType($this->getParameterTypeFromDocblock($docblock, $functionalParameter->var));
 
             if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
-                if ($this->typesMatch()) {
+                if (!$this->typesMatch()) {
                     // TODO: (Types do not match).
                 }
             } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {

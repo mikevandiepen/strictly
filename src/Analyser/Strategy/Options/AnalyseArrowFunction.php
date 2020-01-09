@@ -2,7 +2,6 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Strategy;
 
-use Mediadevs\StrictlyPHP\Parser\File\FunctionNode;
 use Mediadevs\StrictlyPHP\Parser\File\ArrowFunctionNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionLike\AnalyseReturn;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionLike\AnalyseParameter;
