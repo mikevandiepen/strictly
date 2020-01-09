@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Parser\File;
+namespace Mediadevs\Strictly\Parser\File;
 
 /**
  * Class FunctionNode.
  *
- * @package Mediadevs\StrictlyPHP\ParsableNodes
+ * @package Mediadevs\Strictly\ParsableNodes
  */
 final class FunctionNode extends AbstractNode
 {

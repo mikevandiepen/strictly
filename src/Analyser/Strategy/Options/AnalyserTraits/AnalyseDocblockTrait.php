@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits;
+namespace Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits;
 
 use PhpParser\Node;
 use phpDocumentor\Reflection\Type;
@@ -15,7 +15,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 /**
  * Trait AnalyseDocblockTrait.
  *
- * @package Mediadevs\StrictlyPHP\Analyser\AnalyserTraits
+ * @package Mediadevs\Strictly\Analyser\AnalyserTraits
  */
 trait AnalyseDocblockTrait
 {

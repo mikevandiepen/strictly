@@ -1,17 +1,17 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Analyser\Strategy;
+namespace Mediadevs\Strictly\Analyser\Strategy;
 
-use Mediadevs\StrictlyPHP\Parser\File\ClosureNode;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionLike\AnalyseReturn;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionLike\AnalyseParameter;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\Options\AnalyserTraits\FunctionLikeTrait;
+use Mediadevs\Strictly\Parser\File\ClosureNode;
+use Mediadevs\Strictly\Analyser\Strategy\FunctionLike\AnalyseReturn;
+use Mediadevs\Strictly\Analyser\Strategy\FunctionLike\AnalyseParameter;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits\FunctionLikeTrait;
 
 /**
  * Class AnalyseClosure.
  *
- * @package Mediadevs\StrictlyPHP\Analyser\Strategy
+ * @package Mediadevs\Strictly\Analyser\Strategy
  */
 final class AnalyseClosure extends AbstractAnalyser implements AnalyserInterface
 {

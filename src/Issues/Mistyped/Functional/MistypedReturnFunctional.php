@@ -1,17 +1,17 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Issues\Mistyped\Functional;
+namespace Mediadevs\Strictly\Issues\Mistyped\Functional;
 
-use Mediadevs\StrictlyPHP\Issues\Severity;
-use Mediadevs\StrictlyPHP\Issues\AbstractIssue;
-use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
-use Mediadevs\StrictlyPHP\Issues\Contracts\MistypedInterface;
-use Mediadevs\StrictlyPHP\Issues\Contracts\FunctionalInterface;
+use Mediadevs\Strictly\Issues\Severity;
+use Mediadevs\Strictly\Issues\AbstractIssue;
+use Mediadevs\Strictly\Issues\Contracts\IssueInterface;
+use Mediadevs\Strictly\Issues\Contracts\MistypedInterface;
+use Mediadevs\Strictly\Issues\Contracts\FunctionalInterface;
 
 /**
  * Class MistypedReturnFunctional.
  *
- * @package Mediadevs\StrictlyPHP\Issues\Mistyped\Functional
+ * @package Mediadevs\Strictly\Issues\Mistyped\Functional
  */
 final class MistypedReturnFunctional extends AbstractIssue implements IssueInterface, MistypedInterface, FunctionalInterface
 {

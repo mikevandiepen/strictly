@@ -1,19 +1,19 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Analyser\Strategy;
+namespace Mediadevs\Strictly\Analyser\Strategy;
 
-use Mediadevs\StrictlyPHP\Parser\File\PropertyNode;
-use Mediadevs\StrictlyPHP\Issues\Untyped\Docblock\UntypedPropertyDocblock;
-use Mediadevs\StrictlyPHP\Issues\Mistyped\Docblock\MistypedPropertyDocblock;
-use Mediadevs\StrictlyPHP\Issues\Untyped\Functional\UntypedPropertyFunctional;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalysePropertyTrait;
-use Mediadevs\StrictlyPHP\Issues\Mistyped\Functional\MistypedPropertyFunctional;
+use Mediadevs\Strictly\Parser\File\PropertyNode;
+use Mediadevs\Strictly\Issues\Untyped\Docblock\UntypedPropertyDocblock;
+use Mediadevs\Strictly\Issues\Mistyped\Docblock\MistypedPropertyDocblock;
+use Mediadevs\Strictly\Issues\Untyped\Functional\UntypedPropertyFunctional;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits\AnalysePropertyTrait;
+use Mediadevs\Strictly\Issues\Mistyped\Functional\MistypedPropertyFunctional;
 
 /**
  * Class AnalyseProperty.
  *
- * @package Mediadevs\StrictlyPHP\Analyser\Strategy
+ * @package Mediadevs\Strictly\Analyser\Strategy
  */
 final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterface
 {

@@ -1,4 +1,4 @@
-# StrictlyPHP
+# Strictly
 ### This parser library determines whether your PHP is strictly typed.
 
 ## Todo

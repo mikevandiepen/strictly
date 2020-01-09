@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Parser\File;
+namespace Mediadevs\Strictly\Parser\File;
 
 use PhpParser\Node;
 use phpDocumentor\Reflection\DocBlock;
@@ -9,7 +9,7 @@ use phpDocumentor\Reflection\DocBlockFactory;
 /**
  * Class AbstractNode.
  *
- * @package Mediadevs\StrictlyPHP\FileAnalyser\Nodes
+ * @package Mediadevs\Strictly\FileAnalyser\Nodes
  */
 abstract class AbstractNode
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Analyser\Strategy\Options\AnalyserTraits;
+namespace Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits;
 
 /**
  * Trait FunctionLikeTrait.
  *
- * @package Mediadevs\StrictlyPHP\Analyser\Strategy\Options\AnalyserTraits
+ * @package Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits
  */
 trait FunctionLikeTrait
 {

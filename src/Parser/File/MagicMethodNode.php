@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Parser\File;
+namespace Mediadevs\Strictly\Parser\File;
 
 /**
  * Class MagicMethodNode.
  *
- * @package Mediadevs\StrictlyPHP\ParsableNodes
+ * @package Mediadevs\Strictly\ParsableNodes
  */
 final class MagicMethodNode extends AbstractNode
 {

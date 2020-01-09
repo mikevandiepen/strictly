@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Configuration;
+namespace Mediadevs\Strictly\Configuration;
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Finder\Finder;
@@ -8,7 +8,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * Class StrictlyConfiguration.
  *
- * @package Mediadevs\StrictlyPHP\Configuration
+ * @package Mediadevs\Strictly\Configuration
  */
 final class StrictlyConfiguration
 {

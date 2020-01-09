@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Issues;
+namespace Mediadevs\Strictly\Issues;
 
 /**
  * Class AbstractIssue.
  *
- * @package Mediadevs\StrictlyPHP\Issues
+ * @package Mediadevs\Strictly\Issues
  */
 abstract class AbstractIssue
 {
@@ -28,7 +28,7 @@ abstract class AbstractIssue
      *
      * @param int $line
      *
-     * @return \Mediadevs\StrictlyPHP\Issues\AbstractIssue
+     * @return \Mediadevs\Strictly\Issues\AbstractIssue
      */
     public function setLine(int $line): self
     {
@@ -52,7 +52,7 @@ abstract class AbstractIssue
      *
      * @param string $name
      *
-     * @return \Mediadevs\StrictlyPHP\Issues\AbstractIssue
+     * @return \Mediadevs\Strictly\Issues\AbstractIssue
      */
     public function setName(string $name): self
     {

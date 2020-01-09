@@ -1,14 +1,14 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Analyser\Strategy;
+namespace Mediadevs\Strictly\Analyser\Strategy;
 
-use Mediadevs\StrictlyPHP\Parser\File\AbstractNode;
-use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
+use Mediadevs\Strictly\Parser\File\AbstractNode;
+use Mediadevs\Strictly\Issues\Contracts\IssueInterface;
 
 /**
  * Class AbstractAnalyser
  *
- * @package Mediadevs\StrictlyPHP\Analyser\Strategy\Options\AnalyserOptions
+ * @package Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserOptions
  */
 abstract class AbstractAnalyser
 {

@@ -1,17 +1,17 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Issues\Mistyped\Docblock;
+namespace Mediadevs\Strictly\Issues\Mistyped\Docblock;
 
-use Mediadevs\StrictlyPHP\Issues\Severity;
-use Mediadevs\StrictlyPHP\Issues\AbstractIssue;
-use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
-use Mediadevs\StrictlyPHP\Issues\Contracts\MistypedInterface;
-use Mediadevs\StrictlyPHP\Issues\Contracts\DocblockInterface;
+use Mediadevs\Strictly\Issues\Severity;
+use Mediadevs\Strictly\Issues\AbstractIssue;
+use Mediadevs\Strictly\Issues\Contracts\IssueInterface;
+use Mediadevs\Strictly\Issues\Contracts\MistypedInterface;
+use Mediadevs\Strictly\Issues\Contracts\DocblockInterface;
 
 /**
  * Class MistypedReturnDocblock.
  *
- * @package Mediadevs\StrictlyPHP\Issues\Mistyped\Docblock
+ * @package Mediadevs\Strictly\Issues\Mistyped\Docblock
  */
 final class MistypedReturnDocblock extends AbstractIssue implements IssueInterface, MistypedInterface, DocblockInterface
 {

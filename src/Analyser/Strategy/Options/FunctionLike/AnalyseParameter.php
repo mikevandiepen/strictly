@@ -1,21 +1,21 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionLike;
+namespace Mediadevs\Strictly\Analyser\Strategy\FunctionLike;
 
-use Mediadevs\StrictlyPHP\Parser\File\AbstractNode;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AbstractAnalyser;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserInterface;
-use Mediadevs\StrictlyPHP\Issues\Untyped\Docblock\UntypedParameterDocblock;
-use Mediadevs\StrictlyPHP\Issues\Mistyped\Docblock\MistypedParameterDocblock;
-use Mediadevs\StrictlyPHP\Issues\Untyped\Functional\UntypedParameterFunctional;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
-use Mediadevs\StrictlyPHP\Issues\Mistyped\Functional\MistypedParameterFunctional;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseParametersTrait;
+use Mediadevs\Strictly\Parser\File\AbstractNode;
+use Mediadevs\Strictly\Analyser\Strategy\AbstractAnalyser;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyserInterface;
+use Mediadevs\Strictly\Issues\Untyped\Docblock\UntypedParameterDocblock;
+use Mediadevs\Strictly\Issues\Mistyped\Docblock\MistypedParameterDocblock;
+use Mediadevs\Strictly\Issues\Untyped\Functional\UntypedParameterFunctional;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
+use Mediadevs\Strictly\Issues\Mistyped\Functional\MistypedParameterFunctional;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits\AnalyseParametersTrait;
 
 /**
  * Class AnalyseParameter.
  *
- * @package Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionNode
+ * @package Mediadevs\Strictly\Analyser\Strategy\FunctionNode
  */
 final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterface
 {

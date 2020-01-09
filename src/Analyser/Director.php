@@ -1,33 +1,33 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Analyser;
+namespace Mediadevs\Strictly\Analyser;
 
-use Mediadevs\StrictlyPHP\Parser\File;
-use Mediadevs\StrictlyPHP\Parser\File\MethodNode;
-use Mediadevs\StrictlyPHP\Parser\File\ClosureNode;
-use Mediadevs\StrictlyPHP\Parser\File\PropertyNode;
-use Mediadevs\StrictlyPHP\Parser\File\FunctionNode;
-use Mediadevs\StrictlyPHP\Parser\File\MagicMethodNode;
-use Mediadevs\StrictlyPHP\Parser\File\ArrowFunctionNode;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseMethod;
-use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseClosure;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseProperty;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseFunction;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseMagicMethod;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseArrowFunction;
+use Mediadevs\Strictly\Parser\File;
+use Mediadevs\Strictly\Parser\File\MethodNode;
+use Mediadevs\Strictly\Parser\File\ClosureNode;
+use Mediadevs\Strictly\Parser\File\PropertyNode;
+use Mediadevs\Strictly\Parser\File\FunctionNode;
+use Mediadevs\Strictly\Parser\File\MagicMethodNode;
+use Mediadevs\Strictly\Parser\File\ArrowFunctionNode;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyseMethod;
+use Mediadevs\Strictly\Issues\Contracts\IssueInterface;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyseClosure;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyseProperty;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyseFunction;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyseMagicMethod;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyseArrowFunction;
 
 /**
  * Class Decorator.
  *
- * @package Mediadevs\StrictlyPHP\Analyser\Options\Helpers
+ * @package Mediadevs\Strictly\Analyser\Options\Helpers
  */
 final class Director
 {
     /**
      * The subject file of the analysis.
      *
-     * @var \Mediadevs\StrictlyPHP\Parser\File
+     * @var \Mediadevs\Strictly\Parser\File
      */
     private File $file;
 
@@ -41,7 +41,7 @@ final class Director
     /**
      * Director constructor.
      *
-     * @param \Mediadevs\StrictlyPHP\Parser\File $file
+     * @param \Mediadevs\Strictly\Parser\File $file
      */
     public function __construct(File $file)
     {

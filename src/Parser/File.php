@@ -1,21 +1,21 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Parser;
+namespace Mediadevs\Strictly\Parser;
 
 use PhpParser\Node;
 use PhpParser\ParserFactory;
 use \Symfony\Component\Finder\SplFileInfo;
-use Mediadevs\StrictlyPHP\Parser\File\MethodNode;
-use Mediadevs\StrictlyPHP\Parser\File\ClosureNode;
-use Mediadevs\StrictlyPHP\Parser\File\PropertyNode;
-use Mediadevs\StrictlyPHP\Parser\File\FunctionNode;
-use Mediadevs\StrictlyPHP\Parser\File\MagicMethodNode;
-use Mediadevs\StrictlyPHP\Parser\File\ArrowFunctionNode;
+use Mediadevs\Strictly\Parser\File\MethodNode;
+use Mediadevs\Strictly\Parser\File\ClosureNode;
+use Mediadevs\Strictly\Parser\File\PropertyNode;
+use Mediadevs\Strictly\Parser\File\FunctionNode;
+use Mediadevs\Strictly\Parser\File\MagicMethodNode;
+use Mediadevs\Strictly\Parser\File\ArrowFunctionNode;
 
 /**
  * Class File.
  *
- * @package Mediadevs\StrictlyPHP\FileAnalyser
+ * @package Mediadevs\Strictly\FileAnalyser
  */
 final class File
 {

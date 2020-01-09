@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Issues;
+namespace Mediadevs\Strictly\Issues;
 
 /**
  * Class Severity.
  *
- * @package Mediadevs\StrictlyPHP\Issues
+ * @package Mediadevs\Strictly\Issues
  */
 final class Severity
 {

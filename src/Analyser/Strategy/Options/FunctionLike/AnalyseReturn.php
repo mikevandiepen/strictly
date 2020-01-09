@@ -1,21 +1,21 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionLike;
+namespace Mediadevs\Strictly\Analyser\Strategy\FunctionLike;
 
-use Mediadevs\StrictlyPHP\Parser\File\AbstractNode;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AbstractAnalyser;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserInterface;
-use Mediadevs\StrictlyPHP\Issues\Untyped\Docblock\UntypedReturnDocblock;
-use Mediadevs\StrictlyPHP\Issues\Mistyped\Docblock\MistypedReturnDocblock;
-use Mediadevs\StrictlyPHP\Issues\Untyped\Functional\UntypedReturnFunctional;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseReturnTrait;
-use Mediadevs\StrictlyPHP\Issues\Mistyped\Functional\MistypedReturnFunctional;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
+use Mediadevs\Strictly\Parser\File\AbstractNode;
+use Mediadevs\Strictly\Analyser\Strategy\AbstractAnalyser;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyserInterface;
+use Mediadevs\Strictly\Issues\Untyped\Docblock\UntypedReturnDocblock;
+use Mediadevs\Strictly\Issues\Mistyped\Docblock\MistypedReturnDocblock;
+use Mediadevs\Strictly\Issues\Untyped\Functional\UntypedReturnFunctional;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits\AnalyseReturnTrait;
+use Mediadevs\Strictly\Issues\Mistyped\Functional\MistypedReturnFunctional;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
 
 /**
  * Class AnalyseReturn.
  *
- * @package Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionNode
+ * @package Mediadevs\Strictly\Analyser\Strategy\FunctionNode
  */
 final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
 {

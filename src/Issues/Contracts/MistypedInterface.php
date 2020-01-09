@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Issues\Contracts;
+namespace Mediadevs\Strictly\Issues\Contracts;
 
 /**
  * Interface MistypedInterface.
  *
- * @package Mediadevs\StrictlyPHP\Issues\Contracts
+ * @package Mediadevs\Strictly\Issues\Contracts
  */
 interface MistypedInterface
 {

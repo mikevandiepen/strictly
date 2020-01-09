@@ -1,17 +1,17 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Issues\Untyped\Functional;
+namespace Mediadevs\Strictly\Issues\Untyped\Functional;
 
-use Mediadevs\StrictlyPHP\Issues\Severity;
-use Mediadevs\StrictlyPHP\Issues\AbstractIssue;
-use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
-use Mediadevs\StrictlyPHP\Issues\Contracts\UntypedInterface;
-use Mediadevs\StrictlyPHP\Issues\Contracts\FunctionalInterface;
+use Mediadevs\Strictly\Issues\Severity;
+use Mediadevs\Strictly\Issues\AbstractIssue;
+use Mediadevs\Strictly\Issues\Contracts\IssueInterface;
+use Mediadevs\Strictly\Issues\Contracts\UntypedInterface;
+use Mediadevs\Strictly\Issues\Contracts\FunctionalInterface;
 
 /**
  * Class UntypedPropertyFunctional.
  *
- * @package Mediadevs\StrictlyPHP\Issues\Untyped\Functional
+ * @package Mediadevs\Strictly\Issues\Untyped\Functional
  */
 final class UntypedPropertyFunctional extends AbstractIssue implements IssueInterface, UntypedInterface, FunctionalInterface
 {

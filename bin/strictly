@@ -4,7 +4,7 @@
 declare(strict_types=1);
 
 use Symfony\Component\Console\Application;
-use Mediadevs\StrictlyPHP\Command\StrictlyCommand;
+use Mediadevs\Strictly\Command\StrictlyCommand;
 
 // Including the composer autoloader
 if (file_exists(__DIR__.'/../../../autoload.php')) {
@@ -17,7 +17,7 @@ if (file_exists(__DIR__.'/../../../autoload.php')) {
 $command = new StrictlyCommand();
 
 // Executing the parser
-$analyser = new Application('StrictlyPHP');
+$analyser = new Application('Strictly');
 $analyser->add($command);
 $analyser->setDefaultCommand($command->getName());
 

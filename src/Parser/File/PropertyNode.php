@@ -1,11 +1,11 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Parser\File;
+namespace Mediadevs\Strictly\Parser\File;
 
 /**
  * Class PropertyNode.
  *
- * @package Mediadevs\StrictlyPHP\FileAnalyser\Nodes
+ * @package Mediadevs\Strictly\FileAnalyser\Nodes
  */
 final class PropertyNode extends AbstractNode
 {

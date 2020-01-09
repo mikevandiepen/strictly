@@ -1,13 +1,13 @@
 <?php
 
-namespace Mediadevs\StrictlyPHP\Analyser\Strategy;
+namespace Mediadevs\Strictly\Analyser\Strategy;
 
 use PhpParser\Node;
 
 /**
  * Interface AnalyserInterface.
  *
- * @package Mediadevs\StrictlyPHP\Analyser\Options\Strategy
+ * @package Mediadevs\Strictly\Analyser\Options\Strategy
  */
 interface AnalyserInterface
 {
