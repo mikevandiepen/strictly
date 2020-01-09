@@ -3,8 +3,12 @@
 namespace Mediadevs\StrictlyPHP\Analyser\Strategy;
 
 use Mediadevs\StrictlyPHP\Parser\File\PropertyNode;
+use Mediadevs\StrictlyPHP\Issues\Untyped\Docblock\UntypedPropertyDocblock;
+use Mediadevs\StrictlyPHP\Issues\Mistyped\Docblock\MistypedPropertyDocblock;
+use Mediadevs\StrictlyPHP\Issues\Untyped\Functional\UntypedPropertyFunctional;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalysePropertyTrait;
+use Mediadevs\StrictlyPHP\Issues\Mistyped\Functional\MistypedPropertyFunctional;
 
 /**
  * Class AnalyseProperty.
@@ -40,7 +44,7 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
         $this->setFunctionalType($this->getPropertyType($functional));
 
         if (!$this->functionalTypeIsset()) {
-            // TODO: (No functional type is not set).
+            $this->addIssue(new UntypedPropertyFunctional());
         }
     }
 
@@ -58,7 +62,7 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
         $this->setDocblockType($this->getPropertyTypeFromDocblock($docblock));
 
         if (!$this->docblockTypeIsset()) {
-            // TODO: (No docblock type is not set).
+            $this->addIssue(new UntypedPropertyDocblock());
         }
     }
 
@@ -79,14 +83,16 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
 
         if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
             if (!$this->typesMatch()) {
-                // TODO: (Types do not match).
+                $this->addIssue(new MistypedPropertyFunctional());
+                $this->addIssue(new MistypedPropertyDocblock());
             }
         } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {
-            // TODO: (No docblock type is not set).
+            $this->addIssue(new UntypedPropertyDocblock());
         } elseif (!$this->functionalTypeIsset() && $this->docblockTypeIsset()) {
-            // TODO: (No functional type is not set).
+            $this->addIssue(new UntypedPropertyFunctional());
         } else {
-            // TODO: (No types are set).
+            $this->addIssue(new UntypedPropertyFunctional());
+            $this->addIssue(new UntypedPropertyDocblock());
         }
     }
 }

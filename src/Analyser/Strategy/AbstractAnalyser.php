@@ -2,8 +2,8 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Strategy;
 
-use PhpParser\Node;
 use Mediadevs\StrictlyPHP\Parser\File\AbstractNode;
+use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
 
 /**
  * Class AbstractAnalyser
@@ -34,6 +34,13 @@ abstract class AbstractAnalyser
     protected ?string $docblockType;
 
     /**
+     * An array with issues from the analysis process.
+     *
+     * @var IssueInterface[]
+     */
+    private array $issues;
+
+    /**
      * AbstractAnalyser constructor.
      *
      * @param AbstractNode $node
@@ -41,6 +48,26 @@ abstract class AbstractAnalyser
     public function __construct($node)
     {
         $this->node = $node;
+    }
+
+    /**
+     * Adding an issue to the list of issues.
+     *
+     * @param IssueInterface $issue
+     *
+     * @return void
+     */
+    protected function addIssue(IssueInterface $issue): void
+    {
+        $this->issues[] = $issue;
+    }
+
+    /**
+     * @return IssueInterface[]
+     */
+    public function getIssues(): array
+    {
+        return $this->issues;
     }
 
     /**

@@ -5,7 +5,11 @@ namespace Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionLike;
 use Mediadevs\StrictlyPHP\Parser\File\AbstractNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AbstractAnalyser;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserInterface;
+use Mediadevs\StrictlyPHP\Issues\Untyped\Docblock\UntypedParameterDocblock;
+use Mediadevs\StrictlyPHP\Issues\Mistyped\Docblock\MistypedParameterDocblock;
+use Mediadevs\StrictlyPHP\Issues\Untyped\Functional\UntypedParameterFunctional;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
+use Mediadevs\StrictlyPHP\Issues\Mistyped\Functional\MistypedParameterFunctional;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseParametersTrait;
 
 /**
@@ -43,7 +47,7 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
             $this->setFunctionalType($this->getParameterType($functionalParameter->type));
 
             if (!$this->functionalTypeIsset()) {
-                // TODO: (No functional type is not set).
+                $this->addIssue(new UntypedParameterFunctional());
             }
         }
     }
@@ -63,7 +67,7 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
             $this->setDocblockType($docblockParameter->type);
 
             if (!$this->docblockTypeIsset()) {
-                // TODO: (No docblock type is not set).
+                $this->addIssue(new UntypedParameterDocblock());
             }
         }
     }
@@ -86,14 +90,16 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
 
             if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
                 if (!$this->typesMatch()) {
-                    // TODO: (Types do not match).
+                    $this->addIssue(new MistypedParameterFunctional());
+                    $this->addIssue(new MistypedParameterDocblock());
                 }
             } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {
-                // TODO: (No docblock type is not set).
+                $this->addIssue(new UntypedParameterDocblock());
             } elseif (!$this->functionalTypeIsset() && $this->docblockTypeIsset()) {
-                // TODO: (No functional type is not set).
+                $this->addIssue(new UntypedParameterFunctional());
             } else {
-                // TODO: (No types are set).
+                $this->addIssue(new UntypedParameterFunctional());
+                $this->addIssue(new UntypedParameterDocblock());
             }
         }
     }

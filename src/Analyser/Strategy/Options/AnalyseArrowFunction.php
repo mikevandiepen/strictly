@@ -47,6 +47,10 @@ final class AnalyseArrowFunction extends AbstractAnalyser implements AnalyserInt
         if ($this->returnFunctional) {
             $analyseReturn->onlyFunctional();
         }
+
+        // Handling issue inheritance.
+        foreach ($analyseParameter->getIssues() as $parameterIssue) $this->addIssue($parameterIssue);
+        foreach ($analyseReturn->getIssues() as $returnIssue)       $this->addIssue($returnIssue);
     }
 
     /**
@@ -68,6 +72,10 @@ final class AnalyseArrowFunction extends AbstractAnalyser implements AnalyserInt
         if ($this->returnDocblock) {
             $analyseReturn->onlyDocblock();
         }
+
+        // Handling issue inheritance.
+        foreach ($analyseParameter->getIssues() as $parameterIssue) $this->addIssue($parameterIssue);
+        foreach ($analyseReturn->getIssues() as $returnIssue)       $this->addIssue($returnIssue);
     }
 
     /**
@@ -105,5 +113,9 @@ final class AnalyseArrowFunction extends AbstractAnalyser implements AnalyserInt
         if (!$this->returnFunctional && $this->returnDocblock) {
             $analyseReturn->onlyDocblock();
         }
+
+        // Handling issue inheritance.
+        foreach ($analyseParameter->getIssues() as $parameterIssue) $this->addIssue($parameterIssue);
+        foreach ($analyseReturn->getIssues() as $returnIssue)       $this->addIssue($returnIssue);
     }
 }

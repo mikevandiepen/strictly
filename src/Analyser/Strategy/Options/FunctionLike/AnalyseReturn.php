@@ -5,7 +5,11 @@ namespace Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionLike;
 use Mediadevs\StrictlyPHP\Parser\File\AbstractNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AbstractAnalyser;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserInterface;
+use Mediadevs\StrictlyPHP\Issues\Untyped\Docblock\UntypedReturnDocblock;
+use Mediadevs\StrictlyPHP\Issues\Mistyped\Docblock\MistypedReturnDocblock;
+use Mediadevs\StrictlyPHP\Issues\Untyped\Functional\UntypedReturnFunctional;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseReturnTrait;
+use Mediadevs\StrictlyPHP\Issues\Mistyped\Functional\MistypedReturnFunctional;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
 
 /**
@@ -42,7 +46,7 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
         $this->setFunctionalType($this->getReturnType($functional));
 
         if (!$this->functionalTypeIsset()) {
-            // TODO: (No functional type is not set).
+            $this->addIssue(new UntypedReturnFunctional());
         }
     }
 
@@ -60,7 +64,7 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
         $this->setDocblockType($this->getReturnTypeFromDocblock($docblock));
 
         if (!$this->docblockTypeIsset()) {
-            // TODO: (No docblock type is not set).
+            $this->addIssue(new UntypedReturnDocblock());
         }
     }
 
@@ -81,14 +85,16 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
 
         if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
             if (!$this->typesMatch()) {
-                // TODO: (Types do not match).
+                $this->addIssue(new MistypedReturnFunctional());
+                $this->addIssue(new MistypedReturnDocblock());
             }
         } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {
-            // TODO: (No docblock type is not set).
+            $this->addIssue(new UntypedReturnDocblock());
         } elseif (!$this->functionalTypeIsset() && $this->docblockTypeIsset()) {
-            // TODO: (No functional type is not set).
+            $this->addIssue(new UntypedReturnFunctional());
         } else {
-            // TODO: (No types are set).
+            $this->addIssue(new UntypedReturnFunctional());
+            $this->addIssue(new UntypedReturnDocblock());
         }
     }
 }

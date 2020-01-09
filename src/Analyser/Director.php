@@ -10,6 +10,7 @@ use Mediadevs\StrictlyPHP\Parser\File\FunctionNode;
 use Mediadevs\StrictlyPHP\Parser\File\MagicMethodNode;
 use Mediadevs\StrictlyPHP\Parser\File\ArrowFunctionNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseMethod;
+use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseClosure;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseProperty;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseFunction;
@@ -242,7 +243,7 @@ final class Director
      * @param bool              $returnFunctional
      * @param bool              $returnDocblock
      *
-     * @return void
+     * @return IssueInterface[]
      */
     private function analyseArrowFunction(
         ArrowFunctionNode $arrowFunctionNode,
@@ -252,7 +253,7 @@ final class Director
         bool $parametersDocblock,
         bool $returnFunctional,
         bool $returnDocblock
-    ): void
+    ): array
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseArrowFunction($arrowFunctionNode);
@@ -275,6 +276,8 @@ final class Director
         if (!$functional && $docblock) {
             $analyser->onlyDocblock();
         }
+
+        return $analyser->getIssues();
     }
 
     /**
@@ -288,7 +291,7 @@ final class Director
      * @param bool        $returnFunctional
      * @param bool        $returnDocblock
      *
-     * @return void
+     * @return IssueInterface[]
      */
     private function analyseClosure(
         ClosureNode $closureNode,
@@ -298,7 +301,7 @@ final class Director
         bool $parametersDocblock,
         bool $returnFunctional,
         bool $returnDocblock
-    ): void
+    ): array
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseClosure($closureNode);
@@ -321,6 +324,8 @@ final class Director
         if (!$functional && $docblock) {
             $analyser->onlyDocblock();
         }
+
+        return $analyser->getIssues();
     }
 
     /**
@@ -334,7 +339,7 @@ final class Director
      * @param bool         $returnFunctional
      * @param bool         $returnDocblock
      *
-     * @return void
+     * @return IssueInterface[]
      */
     private function analyseFunction(
         FunctionNode $functionNode,
@@ -344,7 +349,7 @@ final class Director
         bool $parametersDocblock,
         bool $returnFunctional,
         bool $returnDocblock
-    ): void
+    ): array
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseFunction($functionNode);
@@ -367,6 +372,8 @@ final class Director
         if (!$functional && $docblock) {
             $analyser->onlyDocblock();
         }
+
+        return $analyser->getIssues();
     }
 
     /**
@@ -380,7 +387,7 @@ final class Director
      * @param bool            $returnFunctional
      * @param bool            $returnDocblock
      *
-     * @return
+     * @return IssueInterface[]
      */
     private function analyseMagicMethod(
         MagicMethodNode $magicMethodNode,
@@ -414,7 +421,7 @@ final class Director
             $analyser->onlyDocblock();
         }
 
-
+        return $analyser->getIssues();
     }
 
     /**
@@ -428,7 +435,7 @@ final class Director
      * @param bool       $returnFunctional
      * @param bool       $returnDocblock
      *
-     * @return void
+     * @return IssueInterface[]
      */
     private function analyseMethod(
         MethodNode $methodNode,
@@ -438,7 +445,7 @@ final class Director
         bool $parametersDocblock,
         bool $returnFunctional,
         bool $returnDocblock
-    ): void
+    ): array
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseMethod($methodNode);
@@ -461,6 +468,8 @@ final class Director
         if (!$functional && $docblock) {
             $analyser->onlyDocblock();
         }
+
+        return $analyser->getIssues();
     }
 
     /**
@@ -470,9 +479,13 @@ final class Director
      * @param bool         $functional
      * @param bool         $docblock
      *
-     * @return void
+     * @return IssueInterface[]
      */
-    private function analyseProperty(PropertyNode $propertyNode, bool $functional, bool $docblock): void
+    private function analyseProperty(
+        PropertyNode $propertyNode,
+        bool $functional,
+        bool $docblock
+    ): array
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseProperty($propertyNode);
@@ -491,5 +504,7 @@ final class Director
         if (!$functional && $docblock) {
             $analyser->onlyDocblock();
         }
+
+        return $analyser->getIssues();
     }
 }
