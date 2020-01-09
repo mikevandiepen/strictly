@@ -31,5 +31,5 @@
         "symfony/stopwatch": "^4.3",
         "phpdocumentor/reflection-docblock": "^4.3"
     },
-    "bin": ["bin/strictlyphp"]
+    "bin": ["bin/strictly"]
 }
