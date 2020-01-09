@@ -4,6 +4,7 @@ namespace Mediadevs\StrictlyPHP\Analyser\Strategy;
 
 use Mediadevs\StrictlyPHP\Parser\File\MethodNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
+use Mediadevs\StrictlyPHP\Analyser\Strategy\Options\AnalyserTraits\FunctionLikeTrait;
 
 /**
  * Class AnalyseMethod.
@@ -12,6 +13,7 @@ use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
  */
 final class AnalyseMethod extends AbstractAnalyser implements AnalyserInterface
 {
+    use FunctionLikeTrait;
     use AnalyseDocblockTrait;
 
     /**

@@ -85,11 +85,10 @@ trait AnalyseDocblockTrait
      * from the array and property the type.
      *
      * @param \phpDocumentor\Reflection\DocBlock $docBlock
-     * @param string                             $parameter
      *
      * @return string|null
      */
-    protected function getPropertyTypeFromDocblock(DocBlock $docBlock, string $parameter): ?string
+    protected function getPropertyTypeFromDocblock(DocBlock $docBlock): ?string
     {
         /** @var \phpDocumentor\Reflection\DocBlock\Tags\Property[] $propertyTags */
         $propertyTags = $docBlock->getTagsByName('var');

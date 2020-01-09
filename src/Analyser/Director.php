@@ -14,7 +14,6 @@ use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseClosure;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseProperty;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseFunction;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseMagicMethod;
-use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseFunctionLike;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseArrowFunction;
 
 /**
@@ -27,8 +26,8 @@ final class Director
     /**
      * Asserting based upon the filters what the analysis strategy will be.
      *
-     * @param \Mediadevs\StrictlyPHP\Parser\File $file
-     * @param array                              $filters
+     * @param File  $file
+     * @param array $filters
      *
      * @return void
      */
@@ -37,12 +36,17 @@ final class Director
         $functional = (bool) isset($filters['functional']);
         $docblock   = (bool) isset($filters['docblock']);
 
-        foreach ($file->functionNode as $functionNode) {
+        foreach ($file->arrowFunctionNode as $arrowFunctionNode) {
             if (isset($filters['arrow-function'])) {
                 $arrowFunctionFunctional = (bool) ($functional) ? isset($filters['arrow-function-functional']) : false;
                 $arrowFunctionDocblock   = (bool) ($docblock) ? isset($filters['arrow-function-docblock']) : false;
 
-                $this->analyseArrowFunction($functionNode, $arrowFunctionFunctional, $arrowFunctionDocblock);
+                $this->analyseArrowFunction(
+                    $arrowFunctionNode,
+                    $arrowFunctionFunctional,
+                    $arrowFunctionDocblock,
+                    $filters
+                );
             }
         }
 
@@ -51,16 +55,26 @@ final class Director
                 $closureFunctional  = (bool) ($functional) ? isset($filters['closure-functional']) : false;
                 $closureDocblock    = (bool) ($docblock) ? isset($filters['closure-docblock']) : false;
 
-                $this->analyseArrowFunction($closureNode, $closureFunctional, $closureDocblock);
+                $this->analyseClosure(
+                    $closureNode,
+                    $closureFunctional,
+                    $closureDocblock,
+                    $filters
+                );
             }
         }
 
         foreach ($file->functionNode as $functionNode) {
             if (isset($filters['function'])) {
-                $functionFunctional = (bool) ($functional) ? isset($filters['arrow-function-functional']) : false;
-                $functionDocblock   = (bool) ($docblock) ? isset($filters['arrow-function-docblock']) : false;
+                $functionFunctional = (bool) ($functional) ? isset($filters['function-functional']) : false;
+                $functionDocblock   = (bool) ($docblock) ? isset($filters['function-docblock']) : false;
 
-                $this->analyseFunction($functionNode, $functionFunctional, $functionDocblock);
+                $this->analyseFunction(
+                    $functionNode,
+                    $functionFunctional,
+                    $functionDocblock,
+                    $filters
+                );
             }
         }
 
@@ -69,7 +83,12 @@ final class Director
                 $magicMethodFunctional = (bool) ($functional) ? isset($filters['magic-method-functional']) : false;
                 $magicMethodDocblock   = (bool) ($docblock) ? isset($filters['magic-method-docblock']) : false;
 
-                $this->analyseMagicMethod($methodNode, $magicMethodFunctional, $magicMethodDocblock);
+                $this->analyseMagicMethod(
+                    $methodNode,
+                    $magicMethodFunctional,
+                    $magicMethodDocblock,
+                    $filters
+                );
             }
         }
 
@@ -78,7 +97,12 @@ final class Director
                 $methodFunctional   = (bool) ($functional) ? isset($filters['method-functional']) : false;
                 $methodDocblock     = (bool) ($docblock) ? isset($filters['method-docblock']) : false;
 
-                $this->analyseMethod($methodNode, $methodFunctional, $methodDocblock);
+                $this->analyseMethod(
+                    $methodNode,
+                    $methodFunctional,
+                    $methodDocblock,
+                    $filters
+                );
             }
         }
 
@@ -98,13 +122,20 @@ final class Director
      * @param ArrowFunctionNode $arrowFunctionNode
      * @param bool              $functional
      * @param bool              $docblock
+     * @param array             $filters
      *
      * @return void
      */
-    private function analyseArrowFunction(ArrowFunctionNode $arrowFunctionNode, bool $functional, bool $docblock): void
+    private function analyseArrowFunction(
+        ArrowFunctionNode $arrowFunctionNode,
+        bool $functional,
+        bool $docblock,
+        array $filters
+    ): void
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseArrowFunction($arrowFunctionNode);
+        $analyser->setFilters($filters);
 
         // Analysing both the functional code and the docblock.
         if ($functional && $docblock) {
@@ -126,15 +157,22 @@ final class Director
      * The analyser for the closure node.
      *
      * @param ClosureNode $closureNode
-     * @param bool       $functional
-     * @param bool       $docblock
+     * @param bool        $functional
+     * @param bool        $docblock
+     * @param array       $filters
      *
      * @return void
      */
-    private function analyseClosure(ClosureNode $closureNode, bool $functional, bool $docblock): void
+    private function analyseClosure(
+        ClosureNode $closureNode,
+        bool $functional,
+        bool $docblock,
+        array $filters
+    ): void
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseClosure($closureNode);
+        $analyser->setFilters($filters);
 
         // Analysing both the functional code and the docblock.
         if ($functional && $docblock) {
@@ -158,13 +196,20 @@ final class Director
      * @param FunctionNode $functionNode
      * @param bool         $functional
      * @param bool         $docblock
+     * @param array        $filters
      *
      * @return void
      */
-    private function analyseFunction(FunctionNode $functionNode, bool $functional, bool $docblock): void
+    private function analyseFunction(
+        FunctionNode $functionNode,
+        bool $functional,
+        bool $docblock,
+        array $filters
+    ): void
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseFunction($functionNode);
+        $analyser->setFilters($filters);
 
         // Analysing both the functional code and the docblock.
         if ($functional && $docblock) {
@@ -188,13 +233,20 @@ final class Director
      * @param MagicMethodNode $magicMethodNode
      * @param bool            $functional
      * @param bool            $docblock
+     * @param array           $filters
      *
      * @return void
      */
-    private function analyseMagicMethod(MagicMethodNode $magicMethodNode, bool $functional, bool $docblock): void
+    private function analyseMagicMethod(
+        MagicMethodNode $magicMethodNode,
+        bool $functional,
+        bool $docblock,
+        array $filters
+    ): void
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseMagicMethod($magicMethodNode);
+        $analyser->setFilters($filters);
 
         // Analysing both the functional code and the docblock.
         if ($functional && $docblock) {
@@ -218,13 +270,20 @@ final class Director
      * @param MethodNode $methodNode
      * @param bool       $functional
      * @param bool       $docblock
+     * @param array      $filters
      *
      * @return void
      */
-    private function analyseMethod(MethodNode $methodNode, bool $functional, bool $docblock): void
+    private function analyseMethod(
+        MethodNode $methodNode,
+        bool $functional,
+        bool $docblock,
+        array $filters
+    ): void
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseMethod($methodNode);
+        $analyser->setFilters($filters);
 
         // Analysing both the functional code and the docblock.
         if ($functional && $docblock) {
@@ -245,9 +304,9 @@ final class Director
     /**
      * The analyser for the property node.
      *
-     * @param \Mediadevs\StrictlyPHP\Parser\File\PropertyNode $propertyNode
-     * @param bool                                            $functional
-     * @param bool                                            $docblock
+     * @param PropertyNode $propertyNode
+     * @param bool         $functional
+     * @param bool         $docblock
      *
      * @return void
      */

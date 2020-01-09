@@ -2,7 +2,7 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits;
 
-use PhpParser\Node;
+use \PhpParser\Node;
 
 /**
  * Trait AnalyseReturnTrait.
