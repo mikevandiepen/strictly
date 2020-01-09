@@ -3,6 +3,7 @@
 namespace Mediadevs\StrictlyPHP\Analyser\Strategy;
 
 use Mediadevs\StrictlyPHP\Parser\File\FunctionNode;
+use Mediadevs\StrictlyPHP\Parser\File\ArrowFunctionNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
 
 /**
@@ -17,9 +18,9 @@ final class AnalyseArrowFunction extends AbstractAnalyser implements AnalyserInt
     /**
      * AnalyseCallable constructor.
      *
-     * @param FunctionNode $functionLike
+     * @param ArrowFunctionNode $functionLike
      */
-    public function __construct(FunctionNode $functionLike)
+    public function __construct(ArrowFunctionNode $functionLike)
     {
         parent::__construct($functionLike);
     }

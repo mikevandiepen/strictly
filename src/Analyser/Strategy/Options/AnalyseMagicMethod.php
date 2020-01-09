@@ -2,7 +2,7 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Strategy;
 
-use Mediadevs\StrictlyPHP\Parser\File\FunctionNode;
+use Mediadevs\StrictlyPHP\Parser\File\MagicMethodNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
 
 /**
@@ -17,9 +17,9 @@ final class AnalyseMagicMethod extends AbstractAnalyser implements AnalyserInter
     /**
      * AnalyseCallable constructor.
      *
-     * @param FunctionNode $functionLike
+     * @param MagicMethodNode $functionLike
      */
-    public function __construct(FunctionNode $functionLike)
+    public function __construct(MagicMethodNode $functionLike)
     {
         parent::__construct($functionLike);
     }

@@ -2,7 +2,7 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Strategy;
 
-use Mediadevs\StrictlyPHP\Parser\File\FunctionNode;
+use Mediadevs\StrictlyPHP\Parser\File\ClosureNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
 
 /**
@@ -17,9 +17,9 @@ final class AnalyseClosure extends AbstractAnalyser implements AnalyserInterface
     /**
      * AnalyseCallable constructor.
      *
-     * @param FunctionNode $functionLike
+     * @param ClosureNode $functionLike
      */
-    public function __construct(FunctionNode $functionLike)
+    public function __construct(ClosureNode $functionLike)
     {
         parent::__construct($functionLike);
     }

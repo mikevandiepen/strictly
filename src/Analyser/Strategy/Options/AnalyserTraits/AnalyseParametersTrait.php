@@ -26,7 +26,7 @@ trait AnalyseParametersTrait
     /**
      * Collecting the parameter type based upon the given node.
      *
-     * @param \PhpParser\Node\Param $node
+     * @param mixed $node
      *
      * @return string|null
      */

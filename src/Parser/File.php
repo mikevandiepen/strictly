@@ -6,6 +6,7 @@ use PhpParser\Node;
 use PhpParser\ParserFactory;
 use \Symfony\Component\Finder\SplFileInfo;
 use Mediadevs\StrictlyPHP\Parser\File\MethodNode;
+use Mediadevs\StrictlyPHP\Parser\File\ClosureNode;
 use Mediadevs\StrictlyPHP\Parser\File\PropertyNode;
 use Mediadevs\StrictlyPHP\Parser\File\FunctionNode;
 use Mediadevs\StrictlyPHP\Parser\File\MagicMethodNode;
@@ -57,6 +58,13 @@ final class File
      * @var ArrowFunctionNode[]
      */
     public array $arrowFunctionNode;
+
+    /**
+     * This property stores all closure nodes for this file.
+     *
+     * @var ClosureNode[]
+     */
+    public array $closureNode;
 
     /**
      * This property stores all function nodes for this file.
@@ -118,24 +126,32 @@ final class File
     private function analyseNode(Node $node): void
     {
         if ($this->isAssign($node)) {
+            // Recursive call.
             $this->analyseNode($node->expr);
         }
 
         if ($this->isClass($node)) {
+            // Recursive call.
             $this->parseSubNodes($node);
         }
 
         if ($this->isCallable($node)) {
+            // Recursive call.
             $this->parseNodeArguments($node);
         }
 
         if ($this->isExpression($node)) {
+            // Recursive call.
             $this->analyseNode($node->expr);
         }
 
         if ($this->isFunctionLike($node)) {
             if ($this->isArrowFunction($node)) {
                 $this->arrowFunctionNode[] = new ArrowFunctionNode($node);
+            }
+
+            if ($this->isClosure($node)) {
+                $this->closureNode[] = new ClosureNode($node);
             }
 
             if ($this->isFunction($node)) {
@@ -152,6 +168,7 @@ final class File
         }
 
         if ($this->isPropertyGroup($node)) {
+            // Recursive call.
             $this->parseProperties($node);
         }
 
@@ -159,6 +176,7 @@ final class File
             $this->propertyNodes[] = new PropertyNode($node);
         }
 
+        // Recursive call.
         $this->parseSubNodes($node);
     }
 
@@ -249,6 +267,18 @@ final class File
     private function isArrowFunction(Node $node): bool
     {
         return (bool) false; // TODO: Not implemented yet.
+    }
+
+    /**
+     * Whether the node is an instance of closure.
+     *
+     * @param \PhpParser\Node $node
+     *
+     * @return bool
+     */
+    private function isClosure(Node $node): bool
+    {
+        return (bool) ($node instanceof Node\Expr\Closure);
     }
 
     /**
