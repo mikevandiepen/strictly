@@ -3,15 +3,16 @@
 namespace Mediadevs\StrictlyPHP\Issues\Mistyped\Docblock;
 
 use Mediadevs\StrictlyPHP\Issues\Severity;
-use Mediadevs\StrictlyPHP\Issues\DocblockInterface;
-use Mediadevs\StrictlyPHP\Issues\Mistyped\MistypedInterface;
+use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
+use Mediadevs\StrictlyPHP\Issues\Contracts\MistypedInterface;
+use Mediadevs\StrictlyPHP\Issues\Contracts\DocblockInterface;
 
 /**
  * Class MistypedReturnDocblock.
  *
  * @package Mediadevs\StrictlyPHP\Issues\Mistyped\Docblock
  */
-final class MistypedReturnDocblock implements MistypedInterface, DocblockInterface
+final class MistypedReturnDocblock implements IssueInterface, MistypedInterface, DocblockInterface
 {
     /** @var string How the issue will be identified. */
     public const IDENTIFIER = 'mistyped-return-docblock';

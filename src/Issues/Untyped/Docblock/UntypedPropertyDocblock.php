@@ -3,15 +3,16 @@
 namespace Mediadevs\StrictlyPHP\Issues\Untyped\Docblock;
 
 use Mediadevs\StrictlyPHP\Issues\Severity;
-use Mediadevs\StrictlyPHP\Issues\DocblockInterface;
-use Mediadevs\StrictlyPHP\Issues\Untyped\UntypedInterface;
+use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
+use Mediadevs\StrictlyPHP\Issues\Contracts\UntypedInterface;
+use Mediadevs\StrictlyPHP\Issues\Contracts\DocblockInterface;
 
 /**
  * Class UntypedPropertyDocblock.
  *
  * @package Mediadevs\StrictlyPHP\Issues\Untyped\Docblock
  */
-final class UntypedPropertyDocblock implements UntypedInterface, DocblockInterface
+final class UntypedPropertyDocblock implements IssueInterface, UntypedInterface, DocblockInterface
 {
     /** @var string How the issue will be identified. */
     public const IDENTIFIER = 'untyped-property-docblock';

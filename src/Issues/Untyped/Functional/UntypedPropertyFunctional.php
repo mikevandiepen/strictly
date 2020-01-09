@@ -3,15 +3,16 @@
 namespace Mediadevs\StrictlyPHP\Issues\Untyped\Functional;
 
 use Mediadevs\StrictlyPHP\Issues\Severity;
-use Mediadevs\StrictlyPHP\Issues\FunctionalInterface;
-use Mediadevs\StrictlyPHP\Issues\Untyped\UntypedInterface;
+use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
+use Mediadevs\StrictlyPHP\Issues\Contracts\UntypedInterface;
+use Mediadevs\StrictlyPHP\Issues\Contracts\FunctionalInterface;
 
 /**
  * Class UntypedPropertyFunctional.
  *
  * @package Mediadevs\StrictlyPHP\Issues\Untyped\Functional
  */
-final class UntypedPropertyFunctional implements UntypedInterface, FunctionalInterface
+final class UntypedPropertyFunctional implements IssueInterface, UntypedInterface, FunctionalInterface
 {
     /** @var string How the issue will be identified. */
     public const IDENTIFIER = 'untyped-property-functional';

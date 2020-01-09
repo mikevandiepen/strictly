@@ -3,15 +3,16 @@
 namespace Mediadevs\StrictlyPHP\Issues\Mistyped\Functional;
 
 use Mediadevs\StrictlyPHP\Issues\Severity;
-use Mediadevs\StrictlyPHP\Issues\FunctionalInterface;
-use Mediadevs\StrictlyPHP\Issues\Mistyped\MistypedInterface;
+use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
+use Mediadevs\StrictlyPHP\Issues\Contracts\MistypedInterface;
+use Mediadevs\StrictlyPHP\Issues\Contracts\FunctionalInterface;
 
 /**
  * Class MistypedReturnFunctional.
  *
  * @package Mediadevs\StrictlyPHP\Issues\Mistyped\Functional
  */
-final class MistypedReturnFunctional implements MistypedInterface, FunctionalInterface
+final class MistypedReturnFunctional implements IssueInterface, MistypedInterface, FunctionalInterface
 {
     /** @var string How the issue will be identified. */
     public const IDENTIFIER = 'mistyped-return-functional';

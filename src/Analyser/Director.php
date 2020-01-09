@@ -380,7 +380,7 @@ final class Director
      * @param bool            $returnFunctional
      * @param bool            $returnDocblock
      *
-     * @return void
+     * @return
      */
     private function analyseMagicMethod(
         MagicMethodNode $magicMethodNode,
@@ -390,7 +390,7 @@ final class Director
         bool $parametersDocblock,
         bool $returnFunctional,
         bool $returnDocblock
-    ): void
+    ): array
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseMagicMethod($magicMethodNode);
@@ -413,6 +413,8 @@ final class Director
         if (!$functional && $docblock) {
             $analyser->onlyDocblock();
         }
+
+
     }
 
     /**
