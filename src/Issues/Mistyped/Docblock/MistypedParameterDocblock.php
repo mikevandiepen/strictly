@@ -3,6 +3,7 @@
 namespace Mediadevs\StrictlyPHP\Issues\Mistyped\Docblock;
 
 use Mediadevs\StrictlyPHP\Issues\Severity;
+use Mediadevs\StrictlyPHP\Issues\AbstractIssue;
 use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
 use Mediadevs\StrictlyPHP\Issues\Contracts\MistypedInterface;
 use Mediadevs\StrictlyPHP\Issues\Contracts\DocblockInterface;
@@ -12,7 +13,7 @@ use Mediadevs\StrictlyPHP\Issues\Contracts\DocblockInterface;
  *
  * @package Mediadevs\StrictlyPHP\Issues\Mistyped\Docblock
  */
-final class MistypedParameterDocblock implements IssueInterface, MistypedInterface, DocblockInterface
+final class MistypedParameterDocblock extends AbstractIssue implements IssueInterface, MistypedInterface, DocblockInterface
 {
     /** @var string How the issue will be identified. */
     public const IDENTIFIER = 'mistyped-property-docblock';
@@ -21,5 +22,5 @@ final class MistypedParameterDocblock implements IssueInterface, MistypedInterfa
     public const SEVERITY = Severity::ALERT;
 
     /** @var string The message which the user will be prompted with. */
-    public const MESSAGE_COMPACT = 'Incorrect parameter type in the docblock!';
+    public const MESSAGE = 'Incorrect parameter type in the docblock!';
 }

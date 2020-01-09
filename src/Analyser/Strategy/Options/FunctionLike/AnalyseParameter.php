@@ -47,7 +47,10 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
             $this->setFunctionalType($this->getParameterType($functionalParameter->type));
 
             if (!$this->functionalTypeIsset()) {
-                $this->addIssue(new UntypedParameterFunctional());
+                $this->addIssue((new UntypedParameterFunctional())
+                    ->setName($functional->name)
+                    ->setLine($functional->getStartLine())
+                );
             }
         }
     }
@@ -59,15 +62,19 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
      */
     public function onlyDocblock(): void
     {
-        // Collecting the docblock from the AbstractNode which has been passed as node.
-        $docblock = $this->node->getDocblock();
+        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
+        $functional = $this->node->getFunctionalCode();
+        $docblock   = $this->node->getDocblock();
 
         foreach ($this->getParametersFromDocblock($docblock) as $docblockParameter) {
             // Binding the docblock type.
             $this->setDocblockType($docblockParameter->type);
 
             if (!$this->docblockTypeIsset()) {
-                $this->addIssue(new UntypedParameterDocblock());
+                $this->addIssue((new UntypedParameterDocblock())
+                    ->setName($functional->name)
+                    ->setLine($functional->getStartLine())
+                );
             }
         }
     }
@@ -90,16 +97,34 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
 
             if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
                 if (!$this->typesMatch()) {
-                    $this->addIssue(new MistypedParameterFunctional());
-                    $this->addIssue(new MistypedParameterDocblock());
+                    $this->addIssue((new MistypedParameterFunctional())
+                        ->setName($functional->name)
+                        ->setLine($functionalParameter->getStartLine())
+                    );
+
+                    $this->addIssue((new MistypedParameterDocblock())
+                        ->setName($functional->name)
+                        ->setLine($functionalParameter->getStartLine())
+                    );
                 }
             } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {
-                $this->addIssue(new UntypedParameterDocblock());
+                $this->addIssue((new UntypedParameterDocblock())
+                    ->setName($functional->name)
+                    ->setLine($functionalParameter->getStartLine())
+                );
             } elseif (!$this->functionalTypeIsset() && $this->docblockTypeIsset()) {
-                $this->addIssue(new UntypedParameterFunctional());
+                $this->addIssue((new UntypedParameterFunctional())
+                    ->setName($functional->name)
+                    ->setLine($functionalParameter->getStartLine())
+                );
             } else {
-                $this->addIssue(new UntypedParameterFunctional());
-                $this->addIssue(new UntypedParameterDocblock());
+                $this->addIssue((new UntypedParameterFunctional())
+                    ->setName($functional->name)
+                    ->setLine($functionalParameter->getStartLine()));
+                $this->addIssue((new UntypedParameterDocblock())
+                    ->setName($functional->name)
+                    ->setLine($functionalParameter->getStartLine())
+                );
             }
         }
     }

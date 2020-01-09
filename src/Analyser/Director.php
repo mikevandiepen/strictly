@@ -32,6 +32,13 @@ final class Director
     private File $file;
 
     /**
+     * All the issues in this file.
+     *
+     * @var IssueInterface[]
+     */
+    private array $issues;
+
+    /**
      * Director constructor.
      *
      * @param \Mediadevs\StrictlyPHP\Parser\File $file
@@ -50,6 +57,9 @@ final class Director
      */
     public function direct(array $filters): void
     {
+        // All the issues in the current file.
+        $issues = [];
+
         // Whether ANY functional code or docblock can be analysed.
         $functional = (bool) isset($filters['functional']);
         $docblock   = (bool) isset($filters['docblock']);
@@ -244,9 +254,23 @@ final class Director
                 $propertyFunctional = (bool) ($functional) ? isset($filters['property-functional']) : false;
                 $propertyDocblock   = (bool) ($docblock) ? isset($filters['property-docblock']) : false;
 
-                $this->analyseProperty($propertyNode, $propertyFunctional, $propertyDocblock);
+                $this->analyseProperty(
+                    $propertyNode,
+                    $propertyFunctional,
+                    $propertyDocblock
+                );
             }
         }
+    }
+
+    /**
+     * Returning all the issues which have been detected in this file analysis process.
+     *
+     * @return IssueInterface[]
+     */
+    public function getIssues(): array
+    {
+        return $this->issues;
     }
 
     /**
@@ -260,7 +284,7 @@ final class Director
      * @param bool              $returnFunctional
      * @param bool              $returnDocblock
      *
-     * @return IssueInterface[]
+     * @return void
      */
     private function analyseArrowFunction(
         ArrowFunctionNode $arrowFunctionNode,
@@ -270,7 +294,7 @@ final class Director
         bool $parametersDocblock,
         bool $returnFunctional,
         bool $returnDocblock
-    ): array
+    ): void
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseArrowFunction($arrowFunctionNode);
@@ -294,7 +318,9 @@ final class Director
             $analyser->onlyDocblock();
         }
 
-        return $analyser->getIssues();
+        foreach ($analyser->getIssues() as $issue) {
+            $this->issues[] = $issue;
+        }
     }
 
     /**
@@ -308,7 +334,7 @@ final class Director
      * @param bool        $returnFunctional
      * @param bool        $returnDocblock
      *
-     * @return IssueInterface[]
+     * @return void
      */
     private function analyseClosure(
         ClosureNode $closureNode,
@@ -318,7 +344,7 @@ final class Director
         bool $parametersDocblock,
         bool $returnFunctional,
         bool $returnDocblock
-    ): array
+    ): void
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseClosure($closureNode);
@@ -342,7 +368,9 @@ final class Director
             $analyser->onlyDocblock();
         }
 
-        return $analyser->getIssues();
+        foreach ($analyser->getIssues() as $issue) {
+            $this->issues[] = $issue;
+        }
     }
 
     /**
@@ -356,7 +384,7 @@ final class Director
      * @param bool         $returnFunctional
      * @param bool         $returnDocblock
      *
-     * @return IssueInterface[]
+     * @return void
      */
     private function analyseFunction(
         FunctionNode $functionNode,
@@ -366,7 +394,7 @@ final class Director
         bool $parametersDocblock,
         bool $returnFunctional,
         bool $returnDocblock
-    ): array
+    ): void
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseFunction($functionNode);
@@ -390,7 +418,9 @@ final class Director
             $analyser->onlyDocblock();
         }
 
-        return $analyser->getIssues();
+        foreach ($analyser->getIssues() as $issue) {
+            $this->issues[] = $issue;
+        }
     }
 
     /**
@@ -404,7 +434,7 @@ final class Director
      * @param bool            $returnFunctional
      * @param bool            $returnDocblock
      *
-     * @return IssueInterface[]
+     * @return void
      */
     private function analyseMagicMethod(
         MagicMethodNode $magicMethodNode,
@@ -414,7 +444,7 @@ final class Director
         bool $parametersDocblock,
         bool $returnFunctional,
         bool $returnDocblock
-    ): array
+    ): void
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseMagicMethod($magicMethodNode);
@@ -438,7 +468,9 @@ final class Director
             $analyser->onlyDocblock();
         }
 
-        return $analyser->getIssues();
+        foreach ($analyser->getIssues() as $issue) {
+            $this->issues[] = $issue;
+        }
     }
 
     /**
@@ -452,7 +484,7 @@ final class Director
      * @param bool       $returnFunctional
      * @param bool       $returnDocblock
      *
-     * @return IssueInterface[]
+     * @return void
      */
     private function analyseMethod(
         MethodNode $methodNode,
@@ -462,7 +494,7 @@ final class Director
         bool $parametersDocblock,
         bool $returnFunctional,
         bool $returnDocblock
-    ): array
+    ): void
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseMethod($methodNode);
@@ -486,7 +518,9 @@ final class Director
             $analyser->onlyDocblock();
         }
 
-        return $analyser->getIssues();
+        foreach ($analyser->getIssues() as $issue) {
+            $this->issues[] = $issue;
+        }
     }
 
     /**
@@ -496,13 +530,13 @@ final class Director
      * @param bool         $functional
      * @param bool         $docblock
      *
-     * @return IssueInterface[]
+     * @return void
      */
     private function analyseProperty(
         PropertyNode $propertyNode,
         bool $functional,
         bool $docblock
-    ): array
+    ): void
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseProperty($propertyNode);
@@ -522,6 +556,8 @@ final class Director
             $analyser->onlyDocblock();
         }
 
-        return $analyser->getIssues();
+        foreach ($analyser->getIssues() as $issue) {
+            $this->issues[] = $issue;
+        }
     }
 }

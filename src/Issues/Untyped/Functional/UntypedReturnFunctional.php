@@ -3,6 +3,7 @@
 namespace Mediadevs\StrictlyPHP\Issues\Untyped\Functional;
 
 use Mediadevs\StrictlyPHP\Issues\Severity;
+use Mediadevs\StrictlyPHP\Issues\AbstractIssue;
 use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
 use Mediadevs\StrictlyPHP\Issues\Contracts\UntypedInterface;
 use Mediadevs\StrictlyPHP\Issues\Contracts\FunctionalInterface;
@@ -12,7 +13,7 @@ use Mediadevs\StrictlyPHP\Issues\Contracts\FunctionalInterface;
  *
  * @package Mediadevs\StrictlyPHP\Issues\Untyped\Functional
  */
-final class UntypedReturnFunctional implements IssueInterface, UntypedInterface, FunctionalInterface
+final class UntypedReturnFunctional extends AbstractIssue implements IssueInterface, UntypedInterface, FunctionalInterface
 {
     /** @var string How the issue will be identified. */
     public const IDENTIFIER = 'untyped-return-functional';
@@ -21,5 +22,5 @@ final class UntypedReturnFunctional implements IssueInterface, UntypedInterface,
     public const SEVERITY = Severity::WARNING;
 
     /** @var string The message which the user will be prompted with. */
-    public const MESSAGE_COMPACT = 'Undeclared return type in the functional code!';
+    public const MESSAGE = 'Undeclared return type in the functional code!';
 }

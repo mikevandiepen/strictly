@@ -96,13 +96,12 @@ final class File
     public array $propertyNodes;
 
     /**
+     * File constructor.
      * Handling the file and sorting the nodes into the correct node group.
      *
      * @param \Symfony\Component\Finder\SplFileInfo $file
-     *
-     * @return void
      */
-    public function handleFile(SplFileInfo $file): void
+    public function __construct(SplFileInfo $file)
     {
         $this->fileName = $file->getFilename();
         $this->fileSize = $file->getSize();

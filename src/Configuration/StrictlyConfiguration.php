@@ -33,6 +33,41 @@ final class StrictlyConfiguration
         'property',
         'property-functional',
         'property-docblock',
+        // Arrow function analysis scopes.
+        'arrow-function-functional',
+        'arrow-function-docblock',
+        'arrow-function-parameter-functional',
+        'arrow-function-parameter-docblock',
+        'arrow-function-return-functional',
+        'arrow-function-return-docblock',
+        // Closure analysis scopes.
+        'closure-functional',
+        'closure-docblock',
+        'closure-parameter-functional',
+        'closure-parameter-docblock',
+        'closure-return-functional',
+        'closure-return-docblock',
+        // Function analysis scopes.
+        'function-functional',
+        'function-docblock',
+        'function-parameter-functional',
+        'function-parameter-docblock',
+        'function-return-functional',
+        'function-return-docblock',
+        // Magic method analysis scopes.
+        'magic-method-functional',
+        'magic-method-docblock',
+        'magic-method-parameter-functional',
+        'magic-method-parameter-docblock',
+        'magic-method-return-functional',
+        'magic-method-return-docblock',
+        // Method analysis scopes.
+        'method-functional',
+        'method-docblock',
+        'method-parameter-functional',
+        'method-parameter-docblock',
+        'method-return-functional',
+        'method-return-docblock',
     ];
 
     // The analysis configuration file.

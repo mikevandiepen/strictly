@@ -2,15 +2,13 @@
 
 namespace Mediadevs\StrictlyPHP\Command;
 
-use PhpParser\Error;
-use Symfony\Component\Stopwatch\Stopwatch;
+use Mediadevs\StrictlyPHP\Parser\File;
 use Symfony\Component\Console\Helper\Table;
+use Mediadevs\StrictlyPHP\Analyser\Director;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Console\Output\OutputInterface;
+use Mediadevs\StrictlyPHP\Configuration\StrictlyConfiguration;
 
 /**
  * Class StrictlyCommand.
@@ -43,24 +41,38 @@ final class StrictlyCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        // creates a new progress bar (50 units)
-        $progressBar = new ProgressBar($output, 50);
+        $configuration = new StrictlyConfiguration();
 
-        // starts and displays the progress bar
-        $progressBar->start();
+        $projectIssueCount = 0;
+        foreach ($configuration->getFiles() as $configurationFile) {
+            $file = new File($configurationFile);
 
-        $i = 0;
-        while ($i++ < 50) {
-            // ... do some work
+            $analyserStrategy = new Director($file);
+            $analyserStrategy->direct($configuration->getAnalysers());
 
-            // advances the progress bar 1 unit
-            $progressBar->advance();
+            $output->writeln('Analysed file: [' . $file->fileName . '] - size: ' . $file->fileSize);
 
-            // you can also advance the progress bar by more than 1 unit
-            // $progressBar->advance(3);
+            $table = new Table($output);
+            $table->setHeaders(['Severity', 'Identifier', 'Line', 'Name', 'Issue']);
+
+            // Parsing through the issues.
+            $fileIssueCount = 0;
+            foreach ($analyserStrategy->getIssues() as $issue) {
+                $fileIssueCount++;
+
+                $table->addRow([
+                    $issue::Severity,
+                    $issue::Identifier,
+                    $issue->getLine(),
+                    $issue->getFaultyNode(),
+                    $issue::Message
+                ]);
+            }
+            $projectIssueCount += $fileIssueCount;
+
+            $output->writeln('[issues file]: ' . $fileIssueCount);
         }
 
-        // ensures that the progress bar is at 100%
-        $progressBar->finish();
+        $output->writeln('[Issues total]: ' . $projectIssueCount);
     }
 }

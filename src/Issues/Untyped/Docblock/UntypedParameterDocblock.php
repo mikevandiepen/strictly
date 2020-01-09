@@ -3,6 +3,7 @@
 namespace Mediadevs\StrictlyPHP\Issues\Untyped\Docblock;
 
 use Mediadevs\StrictlyPHP\Issues\Severity;
+use Mediadevs\StrictlyPHP\Issues\AbstractIssue;
 use Mediadevs\StrictlyPHP\Issues\Contracts\IssueInterface;
 use Mediadevs\StrictlyPHP\Issues\Contracts\UntypedInterface;
 use Mediadevs\StrictlyPHP\Issues\Contracts\DocblockInterface;
@@ -12,7 +13,7 @@ use Mediadevs\StrictlyPHP\Issues\Contracts\DocblockInterface;
  *
  * @package Mediadevs\StrictlyPHP\Issues\Untyped\Docblock
  */
-final class UntypedParameterDocblock implements IssueInterface, UntypedInterface, DocblockInterface
+final class UntypedParameterDocblock extends AbstractIssue implements IssueInterface, UntypedInterface, DocblockInterface
 {
     /** @var string How the issue will be identified. */
     public const IDENTIFIER = 'untyped-parameter-docblock';
@@ -21,5 +22,5 @@ final class UntypedParameterDocblock implements IssueInterface, UntypedInterface
     public const SEVERITY = Severity::ALERT;
 
     /** @var string The message which the user will be prompted with. */
-    public const MESSAGE_COMPACT = 'Undeclared parameter type in the docblock!';
+    public const MESSAGE = 'Undeclared parameter type in the docblock!';
 }

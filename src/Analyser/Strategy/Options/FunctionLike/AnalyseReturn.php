@@ -46,7 +46,10 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
         $this->setFunctionalType($this->getReturnType($functional));
 
         if (!$this->functionalTypeIsset()) {
-            $this->addIssue(new UntypedReturnFunctional());
+            $this->addIssue((new UntypedReturnFunctional())
+                ->setName($functional->name)
+                ->setLine($functional->getStartLine())
+            );
         }
     }
 
@@ -57,14 +60,18 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
      */
     public function onlyDocblock(): void
     {
-        // Collecting the docblock from the AbstractNode which has been passed as node.
-        $docblock = $this->node->getDocblock();
+        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
+        $functional = $this->node->getFunctionalCode();
+        $docblock   = $this->node->getDocblock();
 
         // Binding the docblock type.
         $this->setDocblockType($this->getReturnTypeFromDocblock($docblock));
 
         if (!$this->docblockTypeIsset()) {
-            $this->addIssue(new UntypedReturnDocblock());
+            $this->addIssue((new UntypedReturnDocblock())
+                ->setName($functional->name)
+                ->setLine($functional->getStartLine())
+            );
         }
     }
 
@@ -85,16 +92,34 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
 
         if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
             if (!$this->typesMatch()) {
-                $this->addIssue(new MistypedReturnFunctional());
-                $this->addIssue(new MistypedReturnDocblock());
+                $this->addIssue((new MistypedReturnFunctional())
+                    ->setName($functional->name)
+                    ->setLine($functional->getStartLine())
+                );
+                $this->addIssue((new MistypedReturnDocblock())
+                    ->setName($functional->name)
+                    ->setLine($functional->getStartLine())
+                );
             }
         } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {
-            $this->addIssue(new UntypedReturnDocblock());
+            $this->addIssue((new UntypedReturnDocblock())
+                ->setName($functional->name)
+                ->setLine($functional->getStartLine())
+            );
         } elseif (!$this->functionalTypeIsset() && $this->docblockTypeIsset()) {
-            $this->addIssue(new UntypedReturnFunctional());
+            $this->addIssue((new UntypedReturnFunctional())
+                ->setName($functional->name)
+                ->setLine($functional->getStartLine())
+            );
         } else {
-            $this->addIssue(new UntypedReturnFunctional());
-            $this->addIssue(new UntypedReturnDocblock());
+            $this->addIssue((new UntypedReturnFunctional())
+                ->setName($functional->name)
+                ->setLine($functional->getStartLine())
+            );
+            $this->addIssue((new UntypedReturnDocblock())
+                ->setName($functional->name)
+                ->setLine($functional->getStartLine())
+            );
         }
     }
 }

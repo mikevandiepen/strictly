@@ -55,8 +55,9 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
      */
     public function onlyDocblock(): void
     {
-        // Collecting the docblock from the AbstractNode which has been passed as node.
-        $docblock = $this->node->getDocblock();
+        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
+        $functional = $this->node->getFunctionalCode();
+        $docblock   = $this->node->getDocblock();
 
         // Binding the docblock type.
         $this->setDocblockType($this->getPropertyTypeFromDocblock($docblock));
