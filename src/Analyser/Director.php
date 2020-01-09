@@ -50,12 +50,29 @@ final class Director
      */
     public function direct(array $filters): void
     {
-        $functional             = (bool) isset($filters['functional']);
-        $docblock               = (bool) isset($filters['docblock']);
-        $parameterFunctional    = (bool) ($functional)  ? (isset($filters['parameter-functional'])) : false;
-        $parameterDocblock      = (bool) ($docblock)    ? (isset($filters['parameter-docblock']))   : false;
-        $returnFunctional       = (bool) ($functional)  ? (isset($filters['return-functional']))    : false;
-        $returnDocblock         = (bool) ($docblock)    ? (isset($filters['parameter-docblock']))   : false;
+        // Whether ANY functional code or docblock can be analysed.
+        $functional = (bool) isset($filters['functional']);
+        $docblock   = (bool) isset($filters['docblock']);
+
+        // Whether ANY return or parameter can be analysed.
+        $parameter  = (bool) isset($filters['parameter']);
+        $return     = (bool) isset($filters['return']);
+
+        // Parameter functional or docblock scope.
+        $parameterFunctional = (bool) ($functional && $parameter)
+            ? (isset($filters['parameter-functional']))
+            : false;
+        $parameterDocblock = (bool) ($docblock && $parameter)
+            ? (isset($filters['parameter-docblock']))
+            : false;
+
+        // Return functional or docblock scope.
+        $returnFunctional = (bool) ($functional && $return)
+            ? (isset($filters['return-functional']))
+            : false;
+        $returnDocblock = (bool) ($docblock && $return)
+            ? (isset($filters['parameter-docblock']))
+            : false;
 
         foreach ($this->file->arrowFunctionNode as $arrowFunctionNode) {
             if (isset($filters['arrow-function'])) {
