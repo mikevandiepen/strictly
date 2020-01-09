@@ -3,6 +3,7 @@
 namespace Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionLike;
 
 use PhpParser\Node;
+use Mediadevs\StrictlyPHP\Parser\File\AbstractNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AbstractAnalyser;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserInterface;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseReturnTrait;
@@ -21,9 +22,9 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
     /**
      * AnalyseCallable constructor.
      *
-     * @param \PhpParser\Node $node
+     * @param AbstractNode $node
      */
-    public function __construct(Node $node)
+    public function __construct(AbstractNode $node)
     {
         parent::__construct($node);
     }
