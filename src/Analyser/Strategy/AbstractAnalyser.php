@@ -36,9 +36,9 @@ abstract class AbstractAnalyser
     /**
      * AbstractAnalyser constructor.
      *
-     * @param AbstractNode $node
+     * @param AbstractNode|\PhpParser\Node $node
      */
-    public function __construct(AbstractNode $node)
+    public function __construct($node)
     {
         $this->node = $node;
     }

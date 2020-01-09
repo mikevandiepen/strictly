@@ -3,9 +3,13 @@
 namespace Mediadevs\StrictlyPHP\Parser;
 
 use PhpParser\Node;
+use PhpParser\ParserFactory;
 use \Symfony\Component\Finder\SplFileInfo;
+use Mediadevs\StrictlyPHP\Parser\File\MethodNode;
 use Mediadevs\StrictlyPHP\Parser\File\PropertyNode;
-use Mediadevs\StrictlyPHP\Parser\File\FunctionLikeNode;
+use Mediadevs\StrictlyPHP\Parser\File\FunctionNode;
+use Mediadevs\StrictlyPHP\Parser\File\MagicMethodNode;
+use Mediadevs\StrictlyPHP\Parser\File\ArrowFunctionNode;
 
 /**
  * Class File.
@@ -14,6 +18,25 @@ use Mediadevs\StrictlyPHP\Parser\File\FunctionLikeNode;
  */
 final class File
 {
+    /** @var array All the names of the magic methods. */
+    private const MAGIC_METHODS = array(
+        '__construct',
+        '__destruct',
+        '__call',
+        '__callStatic',
+        '__get',
+        '__set',
+        '__isset',
+        '__unset',
+        '__sleep',
+        '__wakeup',
+        '__toString',
+        '__invoke',
+        '__set_state',
+        '__clone',
+        '__debugInfo'
+    );
+
     /**
      * The name of this file.
      *
@@ -29,11 +52,32 @@ final class File
     public int $fileSize;
 
     /**
-     * This property stores all function like nodes for this file.
+     * This property stores all arrow function nodes for this file.
      *
-     * @var FunctionLikeNode[]
+     * @var ArrowFunctionNode[]
      */
-    public array $functionLikeNodes;
+    public array $arrowFunctionNode;
+
+    /**
+     * This property stores all function nodes for this file.
+     *
+     * @var FunctionNode[]
+     */
+    public array $functionNode;
+
+    /**
+     * This property stores all magic method nodes for this file.
+     *
+     * @var MagicMethodNode[]
+     */
+    public array $magicMethodNode;
+
+    /**
+     * This property stores all method nodes for this file.
+     *
+     * @var MethodNode[]
+     */
+    public array $methodNode;
 
 
     /**
@@ -90,11 +134,29 @@ final class File
         }
 
         if ($this->isFunctionLike($node)) {
-            $this->functionLikeNodes[] = $node;
+            if ($this->isArrowFunction($node)) {
+                $this->arrowFunctionNode[] = new ArrowFunctionNode($node);
+            }
+
+            if ($this->isFunction($node)) {
+                $this->functionNode[] = new FunctionNode($node);
+            }
+
+            if ($this->isMagicMethod($node)) {
+                $this->magicMethodNode[] = new MagicMethodNode($node);
+            }
+
+            if ($this->isMethod($node)) {
+                $this->methodNode[] = new MethodNode($node);
+            }
+        }
+
+        if ($this->isPropertyGroup($node)) {
+            $this->parseProperties($node);
         }
 
         if ($this->isProperty($node)) {
-            $this->propertyNodes[] = $node;
+            $this->propertyNodes[] = new PropertyNode($node);
         }
 
         $this->parseSubNodes($node);
@@ -154,7 +216,7 @@ final class File
 
 
     /**
-     * Whether the node is an instance of FunctionLikeNode.
+     * Whether the node is an instance of functionLike.
      *
      * @param \PhpParser\Node $node
      *
@@ -166,7 +228,67 @@ final class File
     }
 
     /**
-     * Whether the node falls in the property group.
+     * Whether the node is an instance of function.
+     *
+     * @param \PhpParser\Node $node
+     *
+     * @return bool
+     */
+    private function isFunction(Node $node): bool
+    {
+        return (bool) ($node instanceof Node\Stmt\Function_);
+    }
+
+    /**
+     * Whether the node is an arrow function.
+     *
+     * @param \PhpParser\Node $node
+     *
+     * @return bool
+     */
+    private function isArrowFunction(Node $node): bool
+    {
+        return (bool) false; // TODO: Not implemented yet.
+    }
+
+    /**
+     * Whether the node is an instance of method.
+     *
+     * @param \PhpParser\Node $node
+     *
+     * @return bool
+     */
+    private function isMethod(Node $node): bool
+    {
+        return (bool) ($node instanceof Node\Stmt\ClassMethod);
+    }
+
+    /**
+     * Whether the node is an instance of (magic) method.
+     *
+     * @param \PhpParser\Node $node
+     *
+     * @return bool
+     */
+    private function isMagicMethod(Node $node): bool
+    {
+        return (bool) ($this->isMethod($node) && in_array($node->name->name, self::MAGIC_METHODS));
+    }
+
+    /**
+     * Whether the node is an instance of property.
+     *
+     * @param \PhpParser\Node $node
+     *
+     * @return bool
+     */
+    private function isPropertyGroup(Node $node): bool
+    {
+        return (bool) ($node instanceof Node\Stmt\Property);
+    }
+
+    /**
+     * Whether the node is an instance of property.
      *
      * @param \PhpParser\Node $node
      *
@@ -174,10 +296,7 @@ final class File
      */
     private function isProperty(Node $node): bool
     {
-        $property           = ($node instanceof Node\Stmt\Property);
-        $propertyProperty   = ($node instanceof Node\Stmt\PropertyProperty);
-
-        return (bool) ($property || $propertyProperty);
+        return (bool) ($node instanceof Node\Stmt\PropertyProperty);
     }
 
     /**
@@ -194,6 +313,20 @@ final class File
                 // Running a recursive call for the sub node.
                 $this->analyseNode($subNode);
             }
+        }
+    }
+
+    /**
+     * Parsing the properties from the property group.
+     *
+     * @param \PhpParser\Node $node
+     *
+     * @return void
+     */
+    private function parseProperties(Node $node): void
+    {
+        foreach ($node->props as $properties) {
+            $this->analyseNode($properties);
         }
     }
 

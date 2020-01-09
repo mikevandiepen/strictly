@@ -11,7 +11,7 @@ use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
 /**
  * Class AnalyseReturn.
  *
- * @package Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionLikeNode
+ * @package Mediadevs\StrictlyPHP\Analyser\Strategy\FunctionNode
  */
 final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
 {
@@ -35,7 +35,15 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
      */
     public function onlyFunctional(): void
     {
+        // Collecting the docblock from the AbstractNode which has been passed as node.
+        $functional = $this->node->getFunctionalCode();
 
+        // Binding the functional type.
+        $this->setFunctionalType($this->getReturnType($functional));
+
+        if (!$this->functionalTypeIsset()) {
+            // TODO: (No functional type is not set).
+        }
     }
 
     /**
@@ -45,7 +53,15 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
      */
     public function onlyDocblock(): void
     {
+        // Collecting the docblock from the AbstractNode which has been passed as node.
+        $docblock = $this->node->getDocblock();
 
+        // Binding the docblock type.
+        $this->setDocblockType($this->getReturnTypeFromDocblock($docblock));
+
+        if (!$this->docblockTypeIsset()) {
+            // TODO: (No docblock type is not set).
+        }
     }
 
     /**
@@ -55,9 +71,12 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
      */
     public function bothFunctionalAndDocblock(): void
     {
-        $docblock = $this->getDocblockFromNode($this->node);
+        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
+        $functional = $this->node->getFunctionalCode();
+        $docblock   = $this->node->getDocblock();
 
-        $this->setFunctionalType($this->getReturnType($this->node));
+        // Binding types from the functional code and the docblock.
+        $this->setFunctionalType($this->getReturnType($functional));
         $this->setDocblockType($this->getReturnTypeFromDocblock($docblock));
 
         if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {

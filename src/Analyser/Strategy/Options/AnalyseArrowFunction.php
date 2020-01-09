@@ -2,24 +2,24 @@
 
 namespace Mediadevs\StrictlyPHP\Analyser\Strategy;
 
-use Mediadevs\StrictlyPHP\Parser\File\FunctionLikeNode;
+use Mediadevs\StrictlyPHP\Parser\File\FunctionNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
 
 /**
- * Class AnalyseFunctionLike.
+ * Class AnalyseArrowFunction.
  *
  * @package Mediadevs\StrictlyPHP\Analyser\Strategy
  */
-final class AnalyseFunctionLike extends AbstractAnalyser implements AnalyserInterface
+final class AnalyseArrowFunction extends AbstractAnalyser implements AnalyserInterface
 {
     use AnalyseDocblockTrait;
 
     /**
      * AnalyseCallable constructor.
      *
-     * @param FunctionLikeNode $functionLike
+     * @param FunctionNode $functionLike
      */
-    public function __construct(FunctionLikeNode $functionLike)
+    public function __construct(FunctionNode $functionLike)
     {
         parent::__construct($functionLike);
     }

@@ -3,11 +3,11 @@
 namespace Mediadevs\StrictlyPHP\Parser\File;
 
 /**
- * Class FunctionLikeNode.
+ * Class ArrowFunctionNode.
  *
  * @package Mediadevs\StrictlyPHP\ParsableNodes
  */
-final class FunctionLikeNode extends AbstractNode
+final class ArrowFunctionNode extends AbstractNode
 {
 
 }

@@ -4,7 +4,7 @@ namespace Mediadevs\StrictlyPHP\Analyser;
 
 use Mediadevs\StrictlyPHP\Parser\File;
 use Mediadevs\StrictlyPHP\Parser\File\PropertyNode;
-use Mediadevs\StrictlyPHP\Parser\File\FunctionLikeNode;
+use Mediadevs\StrictlyPHP\Parser\File\FunctionNode;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseProperty;
 use Mediadevs\StrictlyPHP\Analyser\Strategy\AnalyseFunctionLike;
 
@@ -50,13 +50,13 @@ final class Director
     /**
      * The analyser for the callable node.
      *
-     * @param FunctionLikeNode $functionLikeNode
-     * @param bool            $functional
-     * @param bool            $docblock
+     * @param FunctionNode $functionLikeNode
+     * @param bool         $functional
+     * @param bool         $docblock
      *
      * @return void
      */
-    private function analyseFunctionLike(FunctionLikeNode $functionLikeNode, bool $functional, bool $docblock): void
+    private function analyseFunctionLike(FunctionNode $functionLikeNode, bool $functional, bool $docblock): void
     {
         // The analyser class for this strategy.
         $analyser = new AnalyseFunctionLike($functionLikeNode);
