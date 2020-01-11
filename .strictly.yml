@@ -2,8 +2,6 @@ project:
     analysers:
         enabled:
             - '*'
-        disabled:
-            - 'docblock'
     directories:
         include:
             - 'src/'

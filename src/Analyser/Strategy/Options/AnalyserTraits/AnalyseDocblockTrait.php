@@ -33,6 +33,10 @@ trait AnalyseDocblockTrait
         /** @var \phpDocumentor\Reflection\DocBlock\Tags\Return_[] $returnTags */
         $returnTags = $docBlock->getTagsByName('return');
 
+        if (count($returnTags) === 0) {
+            return null;
+        }
+
         return $returnTags[0]->getType();
     }
 
@@ -90,6 +94,10 @@ trait AnalyseDocblockTrait
     {
         /** @var \phpDocumentor\Reflection\DocBlock\Tags\Property[] $propertyTags */
         $propertyTags = $docBlock->getTagsByName('var');
+
+        if (count($propertyTags) === 0) {
+            return null;
+        }
 
         return $propertyTags[0]->getType();
     }

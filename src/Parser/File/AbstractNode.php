@@ -57,7 +57,7 @@ abstract class AbstractNode
      */
     public function getDocblock(): DocBlock
     {
-        $docblock = $this->node->getDocComment()->getText();
+        $docblock = $this->node->getDocComment() !== null ? $this->node->getDocComment()->getText() : '/** */';
 
         return DocBlockFactory::createInstance()->create($docblock);
     }

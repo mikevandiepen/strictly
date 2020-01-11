@@ -46,7 +46,10 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
         $this->setFunctionalType($this->getPropertyType($functional));
 
         if (!$this->functionalTypeIsset()) {
-            $this->addIssue(new UntypedPropertyFunctional());
+            $this->addIssue((new UntypedPropertyFunctional())
+                ->setName($functional->name)
+                ->setLine($functional->getStartLine())
+            );
         }
     }
 
@@ -65,7 +68,10 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
         $this->setDocblockType($this->getPropertyTypeFromDocblock($docblock));
 
         if (!$this->docblockTypeIsset()) {
-            $this->addIssue(new UntypedPropertyDocblock());
+            $this->addIssue((new UntypedPropertyDocblock())
+                ->setName($functional->name)
+                ->setLine($functional->getStartLine())
+            );
         }
     }
 
@@ -86,16 +92,34 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
 
         if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
             if (!$this->typesMatch()) {
-                $this->addIssue(new MistypedPropertyFunctional());
-                $this->addIssue(new MistypedPropertyDocblock());
+                $this->addIssue((new MistypedPropertyFunctional())
+                    ->setName($functional->name)
+                    ->setLine($functional->getStartLine())
+                );
+                $this->addIssue((new MistypedPropertyDocblock())
+                    ->setName($functional->name)
+                    ->setLine($functional->getStartLine())
+                );
             }
         } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {
-            $this->addIssue(new UntypedPropertyDocblock());
+            $this->addIssue((new UntypedPropertyDocblock())
+                ->setName($functional->name)
+                ->setLine($functional->getStartLine())
+            );
         } elseif (!$this->functionalTypeIsset() && $this->docblockTypeIsset()) {
-            $this->addIssue(new UntypedPropertyFunctional());
+            $this->addIssue((new UntypedPropertyFunctional())
+                ->setName($functional->name)
+                ->setLine($functional->getStartLine())
+            );
         } else {
-            $this->addIssue(new UntypedPropertyFunctional());
-            $this->addIssue(new UntypedPropertyDocblock());
+            $this->addIssue((new UntypedPropertyFunctional())
+                ->setName($functional->name)
+                ->setLine($functional->getStartLine())
+            );
+            $this->addIssue((new UntypedPropertyDocblock())
+                ->setName($functional->name)
+                ->setLine($functional->getStartLine())
+            );
         }
     }
 }

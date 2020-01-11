@@ -93,7 +93,7 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
         foreach ($this->getParameters($functional) as $functionalParameter) {
             // Binding types from the functional code and the docblock.
             $this->setFunctionalType($this->getParameterType($functionalParameter));
-            $this->setDocblockType($this->getParameterTypeFromDocblock($docblock, $functionalParameter->var));
+            $this->setDocblockType($this->getParameterTypeFromDocblock($docblock, $functionalParameter->var->name));
 
             if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
                 if (!$this->typesMatch()) {

@@ -85,7 +85,7 @@ final class StrictlyCommand extends Command
             $projectIssueCount += $fileIssueCount;
             $table->render();
 
-            $output->writeln('[issues file]: ' . $fileIssueCount);
+            $output->writeln('<error>[issues file]: ' . $fileIssueCount . '</error>');
             $output->writeln('');
         }
 
