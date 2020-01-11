@@ -1,13 +1,13 @@
 <?php
 
-namespace Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits;
+namespace Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits;
 
 use \PhpParser\Node;
 
 /**
  * Trait AnalyseReturnTrait.
  *
- * @package Mediadevs\Strictly\Analyser\AnalyserTraits
+ * @package Mediadevs\Strictly\Analyser\Options\AnalyserTraits
  */
 trait AnalyseReturnTrait
 {

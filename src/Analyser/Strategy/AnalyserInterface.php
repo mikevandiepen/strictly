@@ -2,8 +2,6 @@
 
 namespace Mediadevs\Strictly\Analyser\Strategy;
 
-use PhpParser\Node;
-
 /**
  * Interface AnalyserInterface.
  *

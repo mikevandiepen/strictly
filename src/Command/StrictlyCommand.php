@@ -3,8 +3,8 @@
 namespace Mediadevs\Strictly\Command;
 
 use Mediadevs\Strictly\Parser\File;
-use Symfony\Component\Console\Helper\Table;
 use Mediadevs\Strictly\Analyser\Director;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -48,8 +48,6 @@ final class StrictlyCommand extends Command
             $file = new File($configurationFile);
 
             $analyserStrategy = new Director($file);
-            print_r($configuration->getAnalysers());
-            exit();
             $analyserStrategy->direct($configuration->getAnalysers());
 
             $output->writeln('Analysed file: [' . $file->fileName . '] - File size: ' . $file->fileSize);

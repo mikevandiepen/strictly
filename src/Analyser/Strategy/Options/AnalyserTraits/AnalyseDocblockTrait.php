@@ -1,21 +1,19 @@
 <?php
 
-namespace Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits;
+namespace Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits;
 
-use PhpParser\Node;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Types\Null_;
 use phpDocumentor\Reflection\Types\Mixed_;
 use phpDocumentor\Reflection\Types\Object_;
 use phpDocumentor\Reflection\Types\Compound;
-use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 
 /**
  * Trait AnalyseDocblockTrait.
  *
- * @package Mediadevs\Strictly\Analyser\AnalyserTraits
+ * @package Mediadevs\Strictly\Analyser\Options\AnalyserTraits
  */
 trait AnalyseDocblockTrait
 {

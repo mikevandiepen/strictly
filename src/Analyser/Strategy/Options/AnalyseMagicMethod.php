@@ -1,17 +1,19 @@
 <?php
 
-namespace Mediadevs\Strictly\Analyser\Strategy;
+namespace Mediadevs\Strictly\Analyser\Strategy\Options;
 
 use Mediadevs\Strictly\Parser\File\MagicMethodNode;
-use Mediadevs\Strictly\Analyser\Strategy\FunctionLike\AnalyseReturn;
-use Mediadevs\Strictly\Analyser\Strategy\FunctionLike\AnalyseParameter;
-use Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
+use Mediadevs\Strictly\Analyser\Strategy\AbstractAnalyser;
+use Mediadevs\Strictly\Analyser\Strategy\AnalyserInterface;
+use Mediadevs\Strictly\Analyser\Strategy\Options\FunctionLike\AnalyseReturn;
+use Mediadevs\Strictly\Analyser\Strategy\Options\FunctionLike\AnalyseParameter;
 use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits\FunctionLikeTrait;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits\AnalyseDocblockTrait;
 
 /**
  * Class AnalyseMagicMethod.
  *
- * @package Mediadevs\Strictly\Analyser\Strategy
+ * @package Mediadevs\Strictly\Analyser\Strategy\Options
  */
 final class AnalyseMagicMethod extends AbstractAnalyser implements AnalyserInterface
 {

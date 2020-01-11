@@ -9,13 +9,13 @@ use Mediadevs\Strictly\Parser\File\PropertyNode;
 use Mediadevs\Strictly\Parser\File\FunctionNode;
 use Mediadevs\Strictly\Parser\File\MagicMethodNode;
 use Mediadevs\Strictly\Parser\File\ArrowFunctionNode;
-use Mediadevs\Strictly\Analyser\Strategy\AnalyseMethod;
 use Mediadevs\Strictly\Issues\Contracts\IssueInterface;
-use Mediadevs\Strictly\Analyser\Strategy\AnalyseClosure;
-use Mediadevs\Strictly\Analyser\Strategy\AnalyseProperty;
-use Mediadevs\Strictly\Analyser\Strategy\AnalyseFunction;
-use Mediadevs\Strictly\Analyser\Strategy\AnalyseMagicMethod;
-use Mediadevs\Strictly\Analyser\Strategy\AnalyseArrowFunction;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyseMethod;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyseClosure;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyseProperty;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyseFunction;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyseMagicMethod;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyseArrowFunction;
 
 /**
  * Class Decorator.
@@ -58,55 +58,55 @@ final class Director
     public function direct(array $filters): void
     {
         // Whether ANY functional code or docblock can be analysed.
-        $functional = (bool) isset($filters['functional']);
-        $docblock   = (bool) isset($filters['docblock']);
+        $functional = (bool) in_array('functional', $filters);
+        $docblock   = (bool) in_array('docblock', $filters);
 
         // Whether ANY return or parameter can be analysed.
-        $parameter  = (bool) isset($filters['parameter']);
-        $return     = (bool) isset($filters['return']);
+        $parameter  = (bool) in_array('parameter', $filters);
+        $return     = (bool) in_array('return', $filters);
 
         // Parameter functional or docblock scope.
         $parameterFunctional = (bool) ($functional && $parameter)
-            ? (isset($filters['parameter-functional']))
+            ? (in_array('parameter-functional', $filters))
             : false;
         $parameterDocblock = (bool) ($docblock && $parameter)
-            ? (isset($filters['parameter-docblock']))
+            ? (in_array('parameter-docblock', $filters))
             : false;
 
         // Return functional or docblock scope.
         $returnFunctional = (bool) ($functional && $return)
-            ? (isset($filters['return-functional']))
+            ? (in_array('return-functional', $filters))
             : false;
         $returnDocblock = (bool) ($docblock && $return)
-            ? (isset($filters['parameter-docblock']))
+            ? (in_array('parameter-docblock', $filters))
             : false;
 
-        if (isset($this->file->arrowFunctionNode) && count($this->file->arrowFunctionNode) > 0) {
-            foreach ($this->file->arrowFunctionNode as $arrowFunctionNode) {
-                if (isset($filters['arrow-function'])) {
-                    $arrowFunctionFunctional = (bool) ($functional)
-                        ? isset($filters['arrow-function-functional'])
-                        : false;
-                    $arrowFunctionDocblock = (bool) ($docblock)
-                        ? isset($filters['arrow-function-docblock'])
-                        : false;
+        if (in_array('arrow-function', $filters)) {
+            $arrowFunctionFunctional = (bool) ($functional)
+                ? in_array('arrow-function-functional', $filters)
+                : false;
+            $arrowFunctionDocblock = (bool) ($docblock)
+                ? in_array('arrow-function-docblock', $filters)
+                : false;
 
-                    // Whether arrow-function parameter analysis is enabled.
-                    $arrowFunctionParameterFunctional = (bool) ($arrowFunctionFunctional && $parameterFunctional)
-                        ? isset($filters['arrow-function-parameter-functional'])
-                        : false;
-                    $arrowFunctionParameterDocblock = (bool) ($arrowFunctionDocblock && $parameterDocblock)
-                        ? isset($filters['arrow-function-parameter-docblock'])
-                        : false;
+            // Whether arrow-function parameter analysis is enabled.
+            $arrowFunctionParameterFunctional = (bool) ($arrowFunctionFunctional && $parameterFunctional)
+                ? in_array('arrow-function-parameter-functional', $filters)
+                : false;
+            $arrowFunctionParameterDocblock = (bool) ($arrowFunctionDocblock && $parameterDocblock)
+                ? in_array('arrow-function-parameter-docblock', $filters)
+                : false;
 
-                    // Whether arrow-function return analysis is enabled.
-                    $arrowFunctionReturnFunctional = (bool) ($arrowFunctionFunctional && $returnFunctional)
-                        ? isset($filters['arrow-function-return-functional'])
-                        : false;
-                    $arrowFunctionReturnDocblock = (bool) ($arrowFunctionDocblock && $returnDocblock)
-                        ? isset($filters['arrow-function-return-docblock'])
-                        : false;
+            // Whether arrow-function return analysis is enabled.
+            $arrowFunctionReturnFunctional = (bool) ($arrowFunctionFunctional && $returnFunctional)
+                ? in_array('arrow-function-return-functional', $filters)
+                : false;
+            $arrowFunctionReturnDocblock = (bool) ($arrowFunctionDocblock && $returnDocblock)
+                ? in_array('arrow-function-return-docblock', $filters)
+                : false;
 
+            if (isset($this->file->arrowFunctionNode) && count($this->file->arrowFunctionNode) > 0) {
+                foreach ($this->file->arrowFunctionNode as $arrowFunctionNode) {
                     $this->analyseArrowFunction(
                         $arrowFunctionNode,
                         $arrowFunctionFunctional,
@@ -120,32 +120,32 @@ final class Director
             }
         }
 
-        if (isset($this->file->closureNode) && count($this->file->closureNode) > 0) {
-            foreach ($this->file->closureNode as $closureNode) {
-                if (isset($filters['closure'])) {
-                    $closureFunctional = (bool) ($functional)
-                        ? isset($filters['closure-functional'])
-                        : false;
-                    $closureDocblock = (bool) ($docblock)
-                        ? isset($filters['closure-docblock'])
-                        : false;
+        if (in_array('closure', $filters)) {
+            $closureFunctional = (bool) ($functional)
+                ? in_array('closure-functional', $filters)
+                : false;
+            $closureDocblock = (bool) ($docblock)
+                ? in_array('closure-docblock', $filters)
+                : false;
 
-                    // Whether closure parameter analysis is enabled.
-                    $closureParameterFunctional = (bool) ($closureFunctional && $parameterFunctional)
-                        ? isset($filters['closure-parameter-functional'])
-                        : false;
-                    $closureParameterDocblock = (bool) ($closureDocblock && $parameterDocblock)
-                        ? isset($filters['closure-parameter-docblock'])
-                        : false;
+            // Whether closure parameter analysis is enabled.
+            $closureParameterFunctional = (bool) ($closureFunctional && $parameterFunctional)
+                ? in_array('closure-parameter-functional', $filters)
+                : false;
+            $closureParameterDocblock = (bool) ($closureDocblock && $parameterDocblock)
+                ? in_array('closure-parameter-docblock', $filters)
+                : false;
 
-                    // Whether closure return analysis is enabled.
-                    $closureReturnFunctional = (bool) ($closureFunctional && $returnFunctional)
-                        ? isset($filters['closure-return-functional'])
-                        : false;
-                    $closureReturnDocblock = (bool) ($closureDocblock && $returnDocblock)
-                        ? isset($filters['closure-return-docblock'])
-                        : false;
+            // Whether closure return analysis is enabled.
+            $closureReturnFunctional = (bool) ($closureFunctional && $returnFunctional)
+                ? in_array('closure-return-functional', $filters)
+                : false;
+            $closureReturnDocblock = (bool) ($closureDocblock && $returnDocblock)
+                ? in_array('closure-return-docblock', $filters)
+                : false;
 
+            if (isset($this->file->closureNode) && count($this->file->closureNode) > 0) {
+                foreach ($this->file->closureNode as $closureNode) {
                     $this->analyseClosure(
                         $closureNode,
                         $closureFunctional,
@@ -159,32 +159,32 @@ final class Director
             }
         }
 
-        if (isset($this->file->functionNode) && count($this->file->functionNode) > 0) {
-            foreach ($this->file->functionNode as $functionNode) {
-                if (isset($filters['function'])) {
-                    $functionFunctional = (bool) ($functional)
-                        ? isset($filters['function-functional'])
-                        : false;
-                    $functionDocblock = (bool) ($docblock)
-                        ? isset($filters['function-docblock'])
-                        : false;
+        if (in_array('function', $filters)) {
+            $functionFunctional = (bool) ($functional)
+                ? in_array('function-functional', $filters)
+                : false;
+            $functionDocblock = (bool) ($docblock)
+                ? in_array('function-docblock', $filters)
+                : false;
 
-                    // Whether function parameter analysis is enabled.
-                    $functionParameterFunctional = (bool) ($functionFunctional && $parameterFunctional)
-                        ? isset($filters['function-parameter-functional'])
-                        : false;
-                    $functionParameterDocblock = (bool) ($functionDocblock && $parameterDocblock)
-                        ? isset($filters['function-parameter-docblock'])
-                        : false;
+            // Whether function parameter analysis is enabled.
+            $functionParameterFunctional = (bool) ($functionFunctional && $parameterFunctional)
+                ? in_array('function-parameter-functional', $filters)
+                : false;
+            $functionParameterDocblock = (bool) ($functionDocblock && $parameterDocblock)
+                ? in_array('function-parameter-docblock', $filters)
+                : false;
 
-                    // Whether function return analysis is enabled.
-                    $functionReturnFunctional = (bool) ($functionFunctional && $returnFunctional)
-                        ? isset($filters['function-return-functional'])
-                        : false;
-                    $functionReturnDocblock = (bool) ($functionDocblock && $returnDocblock)
-                        ? isset($filters['function-return-docblock'])
-                        : false;
+            // Whether function return analysis is enabled.
+            $functionReturnFunctional = (bool) ($functionFunctional && $returnFunctional)
+                ? in_array('function-return-functional', $filters)
+                : false;
+            $functionReturnDocblock = (bool) ($functionDocblock && $returnDocblock)
+                ? in_array('function-return-docblock', $filters)
+                : false;
 
+            if (isset($this->file->functionNode) && count($this->file->functionNode) > 0) {
+                foreach ($this->file->functionNode as $functionNode) {
                     $this->analyseFunction(
                         $functionNode,
                         $functionFunctional,
@@ -198,32 +198,32 @@ final class Director
             }
         }
 
-        if (isset($this->file->magicMethodNode) && count($this->file->magicMethodNode) > 0) {
-            foreach ($this->file->magicMethodNode as $methodNode) {
-                if (isset($filters['magic-method'])) {
-                    $magicMethodFunctional = (bool) ($functional)
-                        ? isset($filters['magic-method-functional'])
-                        : false;
-                    $magicMethodDocblock = (bool) ($docblock)
-                        ? isset($filters['magic-method-docblock'])
-                        : false;
+        if (in_array('magic-method', $filters)) {
+            $magicMethodFunctional = (bool) ($functional)
+                ? in_array('magic-method-functional', $filters)
+                : false;
+            $magicMethodDocblock = (bool) ($docblock)
+                ? in_array('magic-method-docblock', $filters)
+                : false;
 
-                    // Whether magic method parameter analysis is enabled.
-                    $magicMethodParameterFunctional = (bool) ($magicMethodFunctional && $parameterFunctional)
-                        ? isset($filters['magic-method-parameter-functional'])
-                        : false;
-                    $magicMethodParameterDocblock = (bool) ($magicMethodDocblock && $parameterDocblock)
-                        ? isset($filters['magic-method-parameter-docblock'])
-                        : false;
+            // Whether magic method parameter analysis is enabled.
+            $magicMethodParameterFunctional = (bool) ($magicMethodFunctional && $parameterFunctional)
+                ? in_array('magic-method-parameter-functional', $filters)
+                : false;
+            $magicMethodParameterDocblock = (bool) ($magicMethodDocblock && $parameterDocblock)
+                ? in_array('magic-method-parameter-docblock', $filters)
+                : false;
 
-                    // Whether magic method return analysis is enabled.
-                    $magicMethodReturnFunctional = (bool) ($magicMethodFunctional && $returnFunctional)
-                        ? isset($filters['magic-method-return-functional'])
-                        : false;
-                    $magicMethodReturnDocblock = (bool) ($magicMethodDocblock && $returnDocblock)
-                        ? isset($filters['magic-method-return-docblock'])
-                        : false;
+            // Whether magic method return analysis is enabled.
+            $magicMethodReturnFunctional = (bool) ($magicMethodFunctional && $returnFunctional)
+                ? in_array('magic-method-return-functional', $filters)
+                : false;
+            $magicMethodReturnDocblock = (bool) ($magicMethodDocblock && $returnDocblock)
+                ? in_array('magic-method-return-docblock', $filters)
+                : false;
 
+            if (isset($this->file->magicMethodNode) && count($this->file->magicMethodNode) > 0) {
+                foreach ($this->file->magicMethodNode as $methodNode) {
                     $this->analyseMagicMethod(
                         $methodNode,
                         $magicMethodFunctional,
@@ -237,32 +237,32 @@ final class Director
             }
         }
 
-        if (isset($this->file->methodNode) && count($this->file->methodNode) > 0) {
-            foreach ($this->file->methodNode as $methodNode) {
-                if (isset($filters['method'])) {
-                    $methodFunctional = (bool) ($functional)
-                        ? isset($filters['method-functional'])
-                        : false;
-                    $methodDocblock = (bool) ($docblock)
-                        ? isset($filters['method-docblock'])
-                        : false;
+        if (in_array('method', $filters)) {
+            $methodFunctional = (bool) ($functional)
+                ? in_array('method-functional', $filters)
+                : false;
+            $methodDocblock = (bool) ($docblock)
+                ? in_array('method-docblock', $filters)
+                : false;
 
-                    // Whether method parameter analysis is enabled.
-                    $methodParameterFunctional = (bool) ($methodFunctional && $parameterFunctional)
-                        ? isset($filters['method-parameter-functional'])
-                        : false;
-                    $methodParameterDocblock = (bool) ($methodDocblock && $parameterDocblock)
-                        ? isset($filters['method-parameter-docblock'])
-                        : false;
+            // Whether method parameter analysis is enabled.
+            $methodParameterFunctional = (bool) ($methodFunctional && $parameterFunctional)
+                ? in_array('method-parameter-functional', $filters)
+                : false;
+            $methodParameterDocblock = (bool) ($methodDocblock && $parameterDocblock)
+                ? in_array('method-parameter-docblock', $filters)
+                : false;
 
-                    // Whether method return analysis is enabled.
-                    $methodReturnFunctional = (bool) ($methodFunctional && $returnFunctional)
-                        ? isset($filters['-method-return-functional'])
-                        : false;
-                    $methodReturnDocblock = (bool) ($methodDocblock && $returnDocblock)
-                        ? isset($filters['method-return-docblock'])
-                        : false;
+            // Whether method return analysis is enabled.
+            $methodReturnFunctional = (bool) ($methodFunctional && $returnFunctional)
+                ? in_array('method-return-functional', $filters)
+                : false;
+            $methodReturnDocblock = (bool) ($methodDocblock && $returnDocblock)
+                ? in_array('method-return-docblock', $filters)
+                : false;
 
+            if (isset($this->file->methodNode) && count($this->file->methodNode) > 0) {
+                foreach ($this->file->methodNode as $methodNode) {
                     $this->analyseMethod(
                         $methodNode,
                         $methodFunctional,
@@ -276,16 +276,16 @@ final class Director
             }
         }
 
-        if (isset($this->file->propertyNodes) && count($this->file->propertyNodes) > 0) {
-            foreach ($this->file->propertyNodes as $propertyNode) {
-                if (isset($filters['property'])) {
-                    $propertyFunctional = (bool) ($functional)
-                        ? isset($filters['property-functional'])
-                        : false;
-                    $propertyDocblock = (bool) ($docblock)
-                        ? isset($filters['property-docblock'])
-                        : false;
+        if (in_array('property', $filters)) {
+            $propertyFunctional = (bool) ($functional)
+                ? in_array('property-functional', $filters)
+                : false;
+            $propertyDocblock = (bool) ($docblock)
+                ? in_array('property-docblock', $filters)
+                : false;
 
+            if (isset($this->file->propertyNodes) && count($this->file->propertyNodes) > 0) {
+                foreach ($this->file->propertyNodes as $propertyNode) {
                     $this->analyseProperty(
                         $propertyNode,
                         $propertyFunctional,

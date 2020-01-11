@@ -34,6 +34,7 @@ final class StrictlyConfiguration
         'property-functional',
         'property-docblock',
         // Arrow function analysis scopes.
+        'arrow-function',
         'arrow-function-functional',
         'arrow-function-docblock',
         'arrow-function-parameter-functional',
@@ -41,6 +42,7 @@ final class StrictlyConfiguration
         'arrow-function-return-functional',
         'arrow-function-return-docblock',
         // Closure analysis scopes.
+        'closure',
         'closure-functional',
         'closure-docblock',
         'closure-parameter-functional',
@@ -48,6 +50,7 @@ final class StrictlyConfiguration
         'closure-return-functional',
         'closure-return-docblock',
         // Function analysis scopes.
+        'function',
         'function-functional',
         'function-docblock',
         'function-parameter-functional',
@@ -55,6 +58,7 @@ final class StrictlyConfiguration
         'function-return-functional',
         'function-return-docblock',
         // Magic method analysis scopes.
+        'magic-method',
         'magic-method-functional',
         'magic-method-docblock',
         'magic-method-parameter-functional',
@@ -62,6 +66,7 @@ final class StrictlyConfiguration
         'magic-method-return-functional',
         'magic-method-return-docblock',
         // Method analysis scopes.
+        'method',
         'method-functional',
         'method-docblock',
         'method-parameter-functional',

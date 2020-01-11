@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediadevs\Strictly\Analyser\Strategy\FunctionLike;
+namespace Mediadevs\Strictly\Analyser\Strategy\Options\FunctionLike;
 
 use Mediadevs\Strictly\Parser\File\AbstractNode;
 use Mediadevs\Strictly\Analyser\Strategy\AbstractAnalyser;
@@ -8,14 +8,14 @@ use Mediadevs\Strictly\Analyser\Strategy\AnalyserInterface;
 use Mediadevs\Strictly\Issues\Untyped\Docblock\UntypedReturnDocblock;
 use Mediadevs\Strictly\Issues\Mistyped\Docblock\MistypedReturnDocblock;
 use Mediadevs\Strictly\Issues\Untyped\Functional\UntypedReturnFunctional;
-use Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits\AnalyseReturnTrait;
 use Mediadevs\Strictly\Issues\Mistyped\Functional\MistypedReturnFunctional;
-use Mediadevs\Strictly\Analyser\Strategy\AnalyserTraits\AnalyseDocblockTrait;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits\AnalyseReturnTrait;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits\AnalyseDocblockTrait;
 
 /**
  * Class AnalyseReturn.
  *
- * @package Mediadevs\Strictly\Analyser\Strategy\FunctionNode
+ * @package Mediadevs\Strictly\Analyser\Strategy\Options\FunctionNode
  */
 final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
 {
