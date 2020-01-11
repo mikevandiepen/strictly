@@ -24,6 +24,13 @@ abstract class AbstractIssue
     private string $name;
 
     /**
+     * The type which the node should have.
+     *
+     * @var string
+     */
+    private string $type;
+
+    /**
      * Setting the line for the issue.
      *
      * @param int $line
@@ -69,5 +76,29 @@ abstract class AbstractIssue
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * Setting the type for the issue.
+     *
+     * @param string $type
+     *
+     * @return \Mediadevs\Strictly\Issues\AbstractIssue
+     */
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Getting the type for the issue.
+     *
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
     }
 }

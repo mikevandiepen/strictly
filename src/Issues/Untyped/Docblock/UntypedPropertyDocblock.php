@@ -21,6 +21,9 @@ final class UntypedPropertyDocblock extends AbstractIssue implements IssueInterf
     /** @var int How severe the current issue is. */
     public const SEVERITY = Severity::ALERT;
 
-    /** @var string The message which the user will be prompted with. */
-    public const MESSAGE = 'Undeclared property type in the docblock';
+    /** @var string The message which the user will be prompted with when the print flag is "abstract". */
+    public const ABSTRACT_MESSAGE = 'Undeclared property type in the docblock';
+
+    /** @var string The message which the user will be prompted with when the print flag is "simple". */
+    public const SIMPLE_MESSAGE = 'The docblock of "%s" has an undeclared property type at line:%d, the property type should be "%s"';
 }

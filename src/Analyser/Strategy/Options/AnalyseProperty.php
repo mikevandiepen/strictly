@@ -38,8 +38,9 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
      */
     public function onlyFunctional(): void
     {
-        // Collecting the docblock from the AbstractNode which has been passed as node.
+        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
         $functional = $this->node->getFunctionalCode();
+        $docblock   = $this->node->getDocblock();
 
         // Binding the functional type.
         $this->setFunctionalType($this->getPropertyType($functional));
@@ -48,6 +49,7 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
             $this->addIssue((new UntypedPropertyFunctional())
                 ->setName($functional->name)
                 ->setLine($functional->getStartLine())
+                ->setType('temporary_type')
             );
         }
     }
@@ -70,6 +72,7 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
             $this->addIssue((new UntypedPropertyDocblock())
                 ->setName($functional->name)
                 ->setLine($functional->getStartLine())
+                ->setType('temporary_type')
             );
         }
     }
@@ -94,26 +97,31 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
                 $this->addIssue((new MistypedProperty())
                     ->setName($functional->name)
                     ->setLine($functional->getStartLine())
+                    ->setType('temporary_type')
                 );
             }
         } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {
             $this->addIssue((new UntypedPropertyDocblock())
                 ->setName($functional->name)
                 ->setLine($functional->getStartLine())
+                ->setType('temporary_type')
             );
         } elseif (!$this->functionalTypeIsset() && $this->docblockTypeIsset()) {
             $this->addIssue((new UntypedPropertyFunctional())
                 ->setName($functional->name)
                 ->setLine($functional->getStartLine())
+                ->setType('temporary_type')
             );
         } else {
             $this->addIssue((new UntypedPropertyFunctional())
                 ->setName($functional->name)
                 ->setLine($functional->getStartLine())
+                ->setType('temporary_type')
             );
             $this->addIssue((new UntypedPropertyDocblock())
                 ->setName($functional->name)
                 ->setLine($functional->getStartLine())
+                ->setType('temporary_type')
             );
         }
     }

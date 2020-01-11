@@ -21,6 +21,9 @@ final class UntypedPropertyFunctional extends AbstractIssue implements IssueInte
     /** @var int How severe the current issue is. */
     public const SEVERITY = Severity::WARNING;
 
-    /** @var string The message which the user will be prompted with. */
-    public const MESSAGE = 'Undeclared property type in the functional code';
+    /** @var string The message which the user will be prompted with when the print flag is "abstract". */
+    public const ABSTRACT_MESSAGE = 'Undeclared property type in the functional code';
+
+    /** @var string The message which the user will be prompted with when the print flag is "simple". */
+    public const SIMPLE_MESSAGE = '"%s" has an undeclared property type at line:%d, the property type should be "%s"';
 }
