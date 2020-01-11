@@ -53,22 +53,37 @@ final class StrictlyCommand extends Command
             $output->writeln('Analysed file: [' . $file->fileName . '] - File size: ' . $file->fileSize);
 
             $table = new Table($output);
-            $table->setHeaders(['Severity', 'Identifier', 'Line', 'Name', 'Issue']);
+            $table->setHeaders(['Line', 'Severity', 'Identifier', 'Name', 'Issue']);
 
             // Parsing through the issues.
             $fileIssueCount = 0;
             foreach ($analyserStrategy->getIssues() as $issue) {
                 $fileIssueCount++;
 
+                switch ($issue::SEVERITY) {
+                    case 1:
+                        $severity = 'Info';
+                        break;
+                    case 2:
+                        $severity = 'Alert';
+                        break;
+                    case 3:
+                        $severity = 'Warning';
+                        break;
+                    default:
+                        $severity = 'info';
+                }
+
                 $table->addRow([
-                    $issue::SEVERITY,
-                    $issue::IDENTIFIER,
                     $issue->getLine(),
+                    $severity,
+                    $issue::IDENTIFIER,
                     $issue->getName(),
                     $issue::MESSAGE
                 ]);
             }
             $projectIssueCount += $fileIssueCount;
+            $table->render();
 
             $output->writeln('[issues file]: ' . $fileIssueCount);
             $output->writeln('');
