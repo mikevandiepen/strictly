@@ -3,12 +3,11 @@
 namespace Mediadevs\Strictly\Analyser\Strategy\Options\FunctionLike;
 
 use Mediadevs\Strictly\Parser\File\AbstractNode;
+use Mediadevs\Strictly\Issues\Mistyped\MistypedReturn;
 use Mediadevs\Strictly\Analyser\Strategy\AbstractAnalyser;
 use Mediadevs\Strictly\Analyser\Strategy\AnalyserInterface;
 use Mediadevs\Strictly\Issues\Untyped\Docblock\UntypedReturnDocblock;
-use Mediadevs\Strictly\Issues\Mistyped\Docblock\MistypedReturnDocblock;
 use Mediadevs\Strictly\Issues\Untyped\Functional\UntypedReturnFunctional;
-use Mediadevs\Strictly\Issues\Mistyped\Functional\MistypedReturnFunctional;
 use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits\AnalyseReturnTrait;
 use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits\AnalyseDocblockTrait;
 
@@ -92,11 +91,7 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
 
         if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
             if (!$this->typesMatch()) {
-                $this->addIssue((new MistypedReturnFunctional())
-                    ->setName($functional->name)
-                    ->setLine($functional->getStartLine())
-                );
-                $this->addIssue((new MistypedReturnDocblock())
+                $this->addIssue((new MistypedReturn())
                     ->setName($functional->name)
                     ->setLine($functional->getStartLine())
                 );

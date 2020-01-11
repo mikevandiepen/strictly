@@ -3,12 +3,11 @@
 namespace Mediadevs\Strictly\Analyser\Strategy\Options;
 
 use Mediadevs\Strictly\Parser\File\PropertyNode;
+use Mediadevs\Strictly\Issues\Mistyped\MistypedProperty;
 use Mediadevs\Strictly\Analyser\Strategy\AbstractAnalyser;
 use Mediadevs\Strictly\Analyser\Strategy\AnalyserInterface;
 use Mediadevs\Strictly\Issues\Untyped\Docblock\UntypedPropertyDocblock;
-use Mediadevs\Strictly\Issues\Mistyped\Docblock\MistypedPropertyDocblock;
 use Mediadevs\Strictly\Issues\Untyped\Functional\UntypedPropertyFunctional;
-use Mediadevs\Strictly\Issues\Mistyped\Functional\MistypedPropertyFunctional;
 use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits\AnalysePropertyTrait;
 use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits\AnalyseDocblockTrait;
 
@@ -92,11 +91,7 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
 
         if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
             if (!$this->typesMatch()) {
-                $this->addIssue((new MistypedPropertyFunctional())
-                    ->setName($functional->name)
-                    ->setLine($functional->getStartLine())
-                );
-                $this->addIssue((new MistypedPropertyDocblock())
+                $this->addIssue((new MistypedProperty())
                     ->setName($functional->name)
                     ->setLine($functional->getStartLine())
                 );

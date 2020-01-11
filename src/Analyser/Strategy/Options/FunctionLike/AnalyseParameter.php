@@ -3,12 +3,11 @@
 namespace Mediadevs\Strictly\Analyser\Strategy\Options\FunctionLike;
 
 use Mediadevs\Strictly\Parser\File\AbstractNode;
+use Mediadevs\Strictly\Issues\Mistyped\MistypedParameter;
 use Mediadevs\Strictly\Analyser\Strategy\AbstractAnalyser;
 use Mediadevs\Strictly\Analyser\Strategy\AnalyserInterface;
 use Mediadevs\Strictly\Issues\Untyped\Docblock\UntypedParameterDocblock;
-use Mediadevs\Strictly\Issues\Mistyped\Docblock\MistypedParameterDocblock;
 use Mediadevs\Strictly\Issues\Untyped\Functional\UntypedParameterFunctional;
-use Mediadevs\Strictly\Issues\Mistyped\Functional\MistypedParameterFunctional;
 use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits\AnalyseDocblockTrait;
 use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits\AnalyseParametersTrait;
 
@@ -97,12 +96,7 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
 
             if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
                 if (!$this->typesMatch()) {
-                    $this->addIssue((new MistypedParameterFunctional())
-                        ->setName($functional->name)
-                        ->setLine($functionalParameter->getStartLine())
-                    );
-
-                    $this->addIssue((new MistypedParameterDocblock())
+                    $this->addIssue((new MistypedParameter())
                         ->setName($functional->name)
                         ->setLine($functionalParameter->getStartLine())
                     );
