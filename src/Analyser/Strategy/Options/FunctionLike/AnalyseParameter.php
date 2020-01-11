@@ -2,6 +2,8 @@
 
 namespace Mediadevs\Strictly\Analyser\Strategy\Options\FunctionLike;
 
+use PhpParser\Node;
+use phpDocumentor\Reflection\DocBlock;
 use Mediadevs\Strictly\Parser\File\AbstractNode;
 use Mediadevs\Strictly\Issues\Mistyped\MistypedParameter;
 use Mediadevs\Strictly\Analyser\Strategy\AbstractAnalyser;
@@ -22,6 +24,20 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
     use AnalyseParametersTrait;
 
     /**
+     * The parameters from the functional code.
+     *
+     * @var array
+     */
+    private array $functionalParameters = array();
+
+    /**
+     * The parameters from the docblock.
+     *
+     * @var array
+     */
+    private array $docblockParameters = array();
+
+    /**
      * AnalyseCallable constructor.
      *
      * @param AbstractNode $node
@@ -38,19 +54,16 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
      */
     public function onlyFunctional(): void
     {
-        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
-        $functional = $this->node->getFunctionalCode();
-        $docblock   = $this->node->getDocblock();
-
-        foreach ($functional->getParams() as $functionalParameter) {
-            // Binding the functional type.
-            $this->setFunctionalType($this->getParameterType($functionalParameter));
+        foreach ($this->getParametersFromNode($this->functional) as $parameter => $type) {
+            // Binding types from the functional code and the docblock.
+            $this->setFunctionalType($type);
+            $this->setDocblockType($this->getParameterTypeFromDocblock($this->docblock, $parameter));
 
             if (!$this->functionalTypeIsset()) {
                 $this->addIssue((new UntypedParameterFunctional())
-                    ->setName($functional->name)
-                    ->setLine($functional->getStartLine())
-                    ->setType('temporary_type')
+                    ->setName($this->functional->name)
+                    ->setLine($this->functional->getStartLine())
+                    ->setType($this->getMissingTypeFromDocblock())
                     ->setParameter('temporary_parameter')
                 );
             }
@@ -64,19 +77,16 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
      */
     public function onlyDocblock(): void
     {
-        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
-        $functional = $this->node->getFunctionalCode();
-        $docblock   = $this->node->getDocblock();
-
-        foreach ($this->getParametersFromDocblock($docblock) as $docblockParameter) {
+        foreach ($this->getParametersFromDocblock($this->docblock) as $parameter => $type) {
             // Binding the docblock type.
-            $this->setDocblockType($docblockParameter);
+            $this->setDocblockType($type);
+            $this->setFunctionalType($this->getParameterTypeFromNode($this->functional, $parameter));
 
             if (!$this->docblockTypeIsset()) {
                 $this->addIssue((new UntypedParameterDocblock())
-                    ->setName($functional->name)
-                    ->setLine($functional->getStartLine())
-                    ->setType('temporary_type')
+                    ->setName($this->functional->name)
+                    ->setLine($this->functional->getStartLine())
+                    ->setType($this->getMissingTypeFromNode())
                     ->setParameter('temporary_parameter')
                 );
             }
@@ -90,49 +100,45 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
      */
     public function bothFunctionalAndDocblock(): void
     {
-        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
-        $functional = $this->node->getFunctionalCode();
-        $docblock = $this->node->getDocblock();
-
-        foreach ($this->getParameters($functional) as $functionalParameter) {
+        foreach ($this->getParametersFromNode($this->functional) as $parameter => $type) {
             // Binding types from the functional code and the docblock.
-            $this->setFunctionalType($this->getParameterType($functionalParameter));
-            $this->setDocblockType($this->getParameterTypeFromDocblock($docblock, $functionalParameter->var->name));
+            $this->setFunctionalType($type);
+            $this->setDocblockType($this->getParameterTypeFromDocblock($this->docblock, $parameter));
 
             if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
                 if (!$this->typesMatch()) {
                     $this->addIssue((new MistypedParameter())
-                        ->setName($functional->name)
-                        ->setLine($functionalParameter->getStartLine())
-                        ->setType('temporary_type')
+                        ->setName($this->functional->name)
+                        ->setLine($this->functional->getStartLine())
+                        ->setType($this->getMissingTypeFromNode())
                         ->setParameter('temporary_parameter')
                     );
                 }
             } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {
                 $this->addIssue((new UntypedParameterDocblock())
-                    ->setName($functional->name)
-                    ->setLine($functionalParameter->getStartLine())
-                    ->setType('temporary_type')
+                    ->setName($this->functional->name)
+                    ->setLine($this->functional->getStartLine())
+                    ->setType($this->getMissingTypeFromNode())
                     ->setParameter('temporary_parameter')
                 );
             } elseif (!$this->functionalTypeIsset() && $this->docblockTypeIsset()) {
                 $this->addIssue((new UntypedParameterFunctional())
-                    ->setName($functional->name)
-                    ->setLine($functionalParameter->getStartLine())
-                    ->setType('temporary_type')
+                    ->setName($this->functional->name)
+                    ->setLine($this->functional->getStartLine())
+                    ->setType($this->getMissingTypeFromDocblock())
                     ->setParameter('temporary_parameter')
                 );
             } else {
                 $this->addIssue((new UntypedParameterFunctional())
-                    ->setName($functional->name)
-                    ->setLine($functionalParameter->getStartLine())
-                    ->setType('temporary_type')
+                    ->setName($this->functional->name)
+                    ->setLine($this->functional->getStartLine())
+                    ->setType([] /** TODO: Create an analyser which analyses the body to assert the parameter type */)
                     ->setParameter('temporary_parameter')
                 );
                 $this->addIssue((new UntypedParameterDocblock())
-                    ->setName($functional->name)
-                    ->setLine($functionalParameter->getStartLine())
-                    ->setType('temporary_type')
+                    ->setName($this->functional->name)
+                    ->setLine($this->functional->getStartLine())
+                    ->setType([] /** TODO: Create an analyser which analyses the body to assert the parameter type */)
                     ->setParameter('temporary_parameter')
                 );
             }

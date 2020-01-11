@@ -38,18 +38,15 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
      */
     public function onlyFunctional(): void
     {
-        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
-        $functional = $this->node->getFunctionalCode();
-        $docblock   = $this->node->getDocblock();
-
-        // Binding the functional type.
-        $this->setFunctionalType($this->getPropertyType($functional));
+        // Binding types from the functional code and the docblock.
+        $this->setFunctionalType($this->getPropertyType($this->functional));
+        $this->setDocblockType($this->getPropertyTypeFromDocblock($this->docblock));
 
         if (!$this->functionalTypeIsset()) {
             $this->addIssue((new UntypedPropertyFunctional())
-                ->setName($functional->name)
-                ->setLine($functional->getStartLine())
-                ->setType('temporary_type')
+                ->setName($this->functional->name)
+                ->setLine($this->functional->getStartLine())
+                ->setType($this->getMissingTypeFromDocblock())
             );
         }
     }
@@ -61,18 +58,15 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
      */
     public function onlyDocblock(): void
     {
-        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
-        $functional = $this->node->getFunctionalCode();
-        $docblock   = $this->node->getDocblock();
-
-        // Binding the docblock type.
-        $this->setDocblockType($this->getPropertyTypeFromDocblock($docblock));
+        // Binding types from the functional code and the docblock.
+        $this->setFunctionalType($this->getPropertyType($this->functional));
+        $this->setDocblockType($this->getPropertyTypeFromDocblock($this->docblock));
 
         if (!$this->docblockTypeIsset()) {
             $this->addIssue((new UntypedPropertyDocblock())
-                ->setName($functional->name)
-                ->setLine($functional->getStartLine())
-                ->setType('temporary_type')
+                ->setName($this->functional->name)
+                ->setLine($this->functional->getStartLine())
+                ->setType($this->getMissingTypeFromNode())
             );
         }
     }
@@ -84,44 +78,40 @@ final class AnalyseProperty extends AbstractAnalyser implements AnalyserInterfac
      */
     public function bothFunctionalAndDocblock(): void
     {
-        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
-        $functional = $this->node->getFunctionalCode();
-        $docblock   = $this->node->getDocblock();
-
         // Binding types from the functional code and the docblock.
-        $this->setFunctionalType($this->getPropertyType($functional));
-        $this->setDocblockType($this->getPropertyTypeFromDocblock($docblock));
+        $this->setFunctionalType($this->getPropertyType($this->functional));
+        $this->setDocblockType($this->getPropertyTypeFromDocblock($this->docblock));
 
         if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
             if (!$this->typesMatch()) {
                 $this->addIssue((new MistypedProperty())
-                    ->setName($functional->name)
-                    ->setLine($functional->getStartLine())
-                    ->setType('temporary_type')
+                    ->setName($this->functional->name)
+                    ->setLine($this->functional->getStartLine())
+                    ->setType($this->getMissingTypeFromNode())
                 );
             }
         } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {
             $this->addIssue((new UntypedPropertyDocblock())
-                ->setName($functional->name)
-                ->setLine($functional->getStartLine())
-                ->setType('temporary_type')
+                ->setName($this->functional->name)
+                ->setLine($this->functional->getStartLine())
+                ->setType($this->getMissingTypeFromNode())
             );
         } elseif (!$this->functionalTypeIsset() && $this->docblockTypeIsset()) {
             $this->addIssue((new UntypedPropertyFunctional())
-                ->setName($functional->name)
-                ->setLine($functional->getStartLine())
-                ->setType('temporary_type')
+                ->setName($this->functional->name)
+                ->setLine($this->functional->getStartLine())
+                ->setType($this->getMissingTypeFromDocblock())
             );
         } else {
             $this->addIssue((new UntypedPropertyFunctional())
-                ->setName($functional->name)
-                ->setLine($functional->getStartLine())
-                ->setType('temporary_type')
+                ->setName($this->functional->name)
+                ->setLine($this->functional->getStartLine())
+                ->setType([]/** TODO: Create an analyser which analyses the usage of the property to assert a type */)
             );
             $this->addIssue((new UntypedPropertyDocblock())
-                ->setName($functional->name)
-                ->setLine($functional->getStartLine())
-                ->setType('temporary_type')
+                ->setName($this->functional->name)
+                ->setLine($this->functional->getStartLine())
+                ->setType([]/** TODO: Create an analyser which analyses the usage of the property to assert a type */)
             );
         }
     }

@@ -20,7 +20,7 @@ use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyseArrowFunction;
 /**
  * Class Decorator.
  *
- * @package Mediadevs\Strictly\Analyser\Options\Helpers
+ * @package Mediadevs\Strictly\Analyser\Options\AnalyserHelpers
  */
 final class Director
 {

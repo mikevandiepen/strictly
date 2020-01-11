@@ -24,11 +24,11 @@ abstract class AbstractIssue
     private string $name;
 
     /**
-     * The type which the node should have.
+     * The type(s) which the node should have.
      *
-     * @var string
+     * @var array
      */
-    private string $type;
+    private array $type;
 
     /**
      * The parameter which the node should have.
@@ -86,13 +86,13 @@ abstract class AbstractIssue
     }
 
     /**
-     * Setting the type for the issue.
+     * Setting the type(s) for the issue.
      *
-     * @param string $type
+     * @param array $type
      *
      * @return \Mediadevs\Strictly\Issues\AbstractIssue
      */
-    public function setType(string $type): self
+    public function setType(array $type): self
     {
         $this->type = $type;
 
@@ -100,13 +100,13 @@ abstract class AbstractIssue
     }
 
     /**
-     * Getting the type for the issue.
+     * Getting the type(s) for the issue.
      *
      * @return string
      */
     public function getType(): string
     {
-        return $this->type;
+        return implode('|', $this->type);
     }
 
     /**

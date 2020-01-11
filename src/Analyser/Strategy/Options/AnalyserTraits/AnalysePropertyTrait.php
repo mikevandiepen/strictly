@@ -3,6 +3,7 @@
 namespace Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits;
 
 use PhpParser\Node;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserHelpers\AnalyseFunctionalHelper;
 
 /**
  * Trait AnalysePropertyTrait.
@@ -16,10 +17,12 @@ trait AnalysePropertyTrait
      *
      * @param \PhpParser\Node $node
      *
-     * @return string|null
+     * @return string[]
      */
-    protected function getPropertyType(Node $node): ?string
+    protected function getPropertyType(Node $node): array
     {
-        return $node->getType();
+        $helper = new AnalyseFunctionalHelper();
+
+        return $helper->getTypeFromNode($node);
     }
 }

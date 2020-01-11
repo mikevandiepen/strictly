@@ -3,7 +3,7 @@
 namespace Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits;
 
 use \PhpParser\Node;
-use PhpParser\Node\Identifier;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserHelpers\AnalyseFunctionalHelper;
 
 /**
  * Trait AnalyseReturnTrait.
@@ -17,10 +17,12 @@ trait AnalyseReturnTrait
      *
      * @param \PhpParser\Node $node
      *
-     * @return null|Identifier|Node\Name|Node\NullableType|Node\UnionType
+     * @return string[]
      */
-    protected function getReturnType(Node $node)
+    protected function getReturnType(Node $node): array
     {
-        return $node->getReturnType();
+        $helper = new AnalyseFunctionalHelper();
+
+        return $helper->getTypeFromNode($node->getReturnType());
     }
 }

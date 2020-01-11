@@ -63,13 +63,13 @@ final class StrictlyCommand extends Command
 
                 switch ($issue::SEVERITY) {
                     case 1:
-                        $severity = 'Info';
+                        $severity = 'info';
                         break;
                     case 2:
-                        $severity = 'Alert';
+                        $severity = 'alert';
                         break;
                     case 3:
-                        $severity = 'Warning';
+                        $severity = 'warning';
                         break;
                     default:
                         $severity = 'info';
@@ -107,10 +107,11 @@ final class StrictlyCommand extends Command
      */
     private function abstractIssue(Table $table, AbstractIssue $issue, string $severity): Table
     {
-        $table->setHeaders(['Line', 'Severity', 'Identifier', 'Name', 'Issue', 'Suggested type']);
+        $table->setHeaders(['Line', 'Location', 'Severity', 'Identifier', 'Name', 'Issue', 'Suggested type']);
 
         $table->addRow([
             $issue->getLine(),
+            $issue::LOCATION,
             $severity,
             $issue::IDENTIFIER,
             $issue->getName(),
@@ -136,6 +137,13 @@ final class StrictlyCommand extends Command
 
         // Generating the message configuration based upon the issue.
         switch ($issue::IDENTIFIER) {
+            case 'mistyped-return':
+            case 'untyped-property-docblock':
+            case 'untyped-parameter-docblock':
+            case 'untyped-return-docblock':
+            case 'untyped-property-functional':
+            case 'untyped-parameter-functional':
+            case 'untyped-return-functional':
             case 'mistyped-property':
                 $message = sprintf(
                     $issue::SIMPLE_MESSAGE,
@@ -148,62 +156,6 @@ final class StrictlyCommand extends Command
                 $message = sprintf(
                     $issue::SIMPLE_MESSAGE,
                     $issue->getParameter(),
-                    $issue->getName(),
-                    $issue->getLine(),
-                    $issue->getType()
-                );
-                break;
-            case 'mistyped-return':
-                $message = sprintf(
-                    $issue::SIMPLE_MESSAGE,
-                    $issue->getName(),
-                    $issue->getLine(),
-                    $issue->getType()
-                );
-                break;
-            case 'untyped-property-docblock':
-                $message = sprintf(
-                    $issue::SIMPLE_MESSAGE,
-                    $issue->getName(),
-                    $issue->getLine(),
-                    $issue->getType()
-                );
-                break;
-            case 'untyped-parameter-docblock':
-                $message = sprintf(
-                    $issue::SIMPLE_MESSAGE,
-                    $issue->getName(),
-                    $issue->getLine(),
-                    $issue->getType()
-                );
-                break;
-            case 'untyped-return-docblock':
-                $message = sprintf(
-                    $issue::SIMPLE_MESSAGE,
-                    $issue->getName(),
-                    $issue->getLine(),
-                    $issue->getType()
-                );
-                break;
-            case 'untyped-property-functional':
-                $message = sprintf(
-                    $issue::SIMPLE_MESSAGE,
-                    $issue->getName(),
-                    $issue->getLine(),
-                    $issue->getType()
-                );
-                break;
-            case 'untyped-parameter-functional':
-                $message = sprintf(
-                    $issue::SIMPLE_MESSAGE,
-                    $issue->getName(),
-                    $issue->getLine(),
-                    $issue->getType()
-                );
-                break;
-            case 'untyped-return-functional':
-                $message = sprintf(
-                    $issue::SIMPLE_MESSAGE,
                     $issue->getName(),
                     $issue->getLine(),
                     $issue->getType()

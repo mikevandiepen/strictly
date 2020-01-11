@@ -15,11 +15,14 @@ final class MistypedReturn extends AbstractMistypedIssue implements IssueInterfa
     /** @var string How the issue will be identified. */
     public const IDENTIFIER = 'mistyped-return';
 
+    /** @var string The location of the issue, either docblock, functional or (docblock-and-functional). */
+    public const LOCATION = 'docblock-and-functional';
+
     /** @var int How severe the current issue is. */
     public const SEVERITY = Severity::ALERT;
 
     /** @var string The message which the user will be prompted with when the print flag is "abstract". */
-    public const ABSTRACT_MESSAGE = 'Incorrect return type in either the docblock or functional code';
+    public const ABSTRACT_MESSAGE = 'Incorrect return type';
 
     /** @var string The message which the user will be prompted with when the print flag is "simple". */
     public const SIMPLE_MESSAGE = '"%s" has a mistyped return type at line:%d, the return type should be "%s"';

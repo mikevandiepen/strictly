@@ -38,18 +38,15 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
      */
     public function onlyFunctional(): void
     {
-        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
-        $functional = $this->node->getFunctionalCode();
-        $docblock   = $this->node->getDocblock();
-
-        // Binding the functional type.
-        $this->setFunctionalType($this->getReturnType($functional));
+        // Binding types from the functional code and the docblock.
+        $this->setFunctionalType($this->getReturnType($this->functional));
+        $this->setDocblockType($this->getReturnTypeFromDocblock($this->docblock));
 
         if (!$this->functionalTypeIsset()) {
             $this->addIssue((new UntypedReturnFunctional())
-                ->setName($functional->name)
-                ->setLine($functional->getStartLine())
-                ->setType('temporary_type')
+                ->setName($this->functional->name)
+                ->setLine($this->functional->getStartLine())
+                ->setType($this->getMissingTypeFromDocblock())
             );
         }
     }
@@ -61,18 +58,15 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
      */
     public function onlyDocblock(): void
     {
-        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
-        $functional = $this->node->getFunctionalCode();
-        $docblock   = $this->node->getDocblock();
-
-        // Binding the docblock type.
-        $this->setDocblockType($this->getReturnTypeFromDocblock($docblock));
+        // Binding types from the functional code and the docblock.
+        $this->setFunctionalType($this->getReturnType($this->functional));
+        $this->setDocblockType($this->getReturnTypeFromDocblock($this->docblock));
 
         if (!$this->docblockTypeIsset()) {
             $this->addIssue((new UntypedReturnDocblock())
-                ->setName($functional->name)
-                ->setLine($functional->getStartLine())
-                ->setType('temporary_type')
+                ->setName($this->functional->name)
+                ->setLine($this->functional->getStartLine())
+                ->setType($this->getMissingTypeFromNode())
             );
         }
     }
@@ -84,44 +78,40 @@ final class AnalyseReturn extends AbstractAnalyser implements AnalyserInterface
      */
     public function bothFunctionalAndDocblock(): void
     {
-        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
-        $functional = $this->node->getFunctionalCode();
-        $docblock   = $this->node->getDocblock();
-
         // Binding types from the functional code and the docblock.
-        $this->setFunctionalType($this->getReturnType($functional));
-        $this->setDocblockType($this->getReturnTypeFromDocblock($docblock));
+        $this->setFunctionalType($this->getReturnType($this->functional));
+        $this->setDocblockType($this->getReturnTypeFromDocblock($this->docblock));
 
         if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {
             if (!$this->typesMatch()) {
                 $this->addIssue((new MistypedReturn())
-                    ->setName($functional->name)
-                    ->setLine($functional->getStartLine())
-                    ->setType('temporary_type')
+                    ->setName($this->functional->name)
+                    ->setLine($this->functional->getStartLine())
+                    ->setType($this->getReturnType($this->functional))
                 );
             }
         } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {
             $this->addIssue((new UntypedReturnDocblock())
-                ->setName($functional->name)
-                ->setLine($functional->getStartLine())
-                ->setType('temporary_type')
+                ->setName($this->functional->name)
+                ->setLine($this->functional->getStartLine())
+                ->setType($this->getMissingTypeFromNode())
             );
         } elseif (!$this->functionalTypeIsset() && $this->docblockTypeIsset()) {
             $this->addIssue((new UntypedReturnFunctional())
-                ->setName($functional->name)
-                ->setLine($functional->getStartLine())
-                ->setType('temporary_type')
+                ->setName($this->functional->name)
+                ->setLine($this->functional->getStartLine())
+                ->setType($this->getMissingTypeFromDocblock())
             );
         } else {
             $this->addIssue((new UntypedReturnFunctional())
-                ->setName($functional->name)
-                ->setLine($functional->getStartLine())
-                ->setType('temporary_type')
+                ->setName($this->functional->name)
+                ->setLine($this->functional->getStartLine())
+                ->setType([]/** TODO: Create an analyser which analyses the body to assert the return type */)
             );
             $this->addIssue((new UntypedReturnDocblock())
-                ->setName($functional->name)
-                ->setLine($functional->getStartLine())
-                ->setType('temporary_type')
+                ->setName($this->functional->name)
+                ->setLine($this->functional->getStartLine())
+                ->setType([]/** TODO: Create an analyser which analyses the body to assert the return type */)
             );
         }
     }

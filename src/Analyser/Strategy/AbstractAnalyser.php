@@ -3,9 +3,9 @@
 namespace Mediadevs\Strictly\Analyser\Strategy;
 
 use \PhpParser\Node;
-use PhpParser\Node\Identifier;
-use Mediadevs\Strictly\Parser\File\AbstractNode;
+use phpDocumentor\Reflection\DocBlock;
 use Mediadevs\Strictly\Issues\IssueInterface;
+use Mediadevs\Strictly\Parser\File\AbstractNode;
 
 /**
  * Class AbstractAnalyser
@@ -14,6 +14,20 @@ use Mediadevs\Strictly\Issues\IssueInterface;
  */
 abstract class AbstractAnalyser
 {
+    /**
+     * The functional code.
+     *
+     * @var \PhpParser\Node
+     */
+    protected Node $functional;
+
+    /**
+     * The docblock.
+     *
+     * @var \phpDocumentor\Reflection\DocBlock
+     */
+    protected Docblock $docblock;
+
     /**
      * The node which is subject for analysis.
      *
@@ -24,16 +38,16 @@ abstract class AbstractAnalyser
     /**
      * The type which has been hinted in the functional code.
      *
-     * @var string|Identifier|Node\Name|Node\NullableType|Node\UnionType|null
+     * @var array
      */
-    protected $functionalType;
+    protected array $functionalType = [];
 
     /**
      * The type which has been hinted in the docblock.
      *
-     * @var string|null
+     * @var array
      */
-    protected ?string $docblockType;
+    protected array $docblockType = [];
 
     /**
      * An array with issues from the analysis process.
@@ -49,7 +63,13 @@ abstract class AbstractAnalyser
      */
     public function __construct($node)
     {
+        // The node is an instance off AbstractNode.
         $this->node = $node;
+
+        // Collecting the functional code and the docblock from the AbstractNode which has been passed as node.
+        $this->functional = $node->getFunctionalCode();
+        $this->docblock = $node->getDocblock();
+
     }
 
     /**
@@ -93,27 +113,59 @@ abstract class AbstractAnalyser
     }
 
     /**
-     * Setting the type of the functional code, this type will later be used for analysis.
+     * Setting the type(s) of the functional code, the type(s) will later be used for analysis.
      *
-     * @param string|Identifier|Node\Name|Node\NullableType|Node\UnionType|null $type
+     * @param array $type
      *
      * @return void
      */
-    protected function setFunctionalType($type): void
+    protected function setFunctionalType(array $type): void
     {
         $this->functionalType = $type;
     }
 
     /**
-     * Setting the type of the docblock, this type will later be used for analysis.
+     * Setting the type(s) of the docblock, the type(s) will later be used for analysis.
      *
-     * @param string|null $type
+     * @param array $type
      *
      * @return void
      */
-    protected function setDocblockType(?string $type): void
+    protected function setDocblockType(array $type): void
     {
         $this->docblockType = $type;
+    }
+
+    /**
+     * Collecting the missing types from the docblock.
+     *
+     * @return string[]
+     */
+    protected function getMissingTypeFromDocblock(): array
+    {
+        return array_udiff($this->functionalType, $this->docblockType, function($functionalType, $docblockType) {
+            if ($functionalType != $docblockType) {
+                return $docblockType;
+            }
+
+            return [];
+        });
+    }
+
+    /**
+     * Collecting the missing types from the functional code.
+     *
+     * @return string[]
+     */
+    protected function getMissingTypeFromNode(): array
+    {
+        return array_udiff($this->docblockType, $this->functionalType, function($docblockType, $functionalType) {
+            if ($docblockType != $functionalType) {
+                return $functionalType;
+            }
+
+            return [];
+        });
     }
 
     /**

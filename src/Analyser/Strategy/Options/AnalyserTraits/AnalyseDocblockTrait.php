@@ -9,6 +9,8 @@ use phpDocumentor\Reflection\Types\Mixed_;
 use phpDocumentor\Reflection\Types\Object_;
 use phpDocumentor\Reflection\Types\Compound;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserHelpers\AnalyseDocblockHelper;
+use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserHelpers\AnalyseFunctionalHelper;
 
 /**
  * Trait AnalyseDocblockTrait.
@@ -19,64 +21,75 @@ trait AnalyseDocblockTrait
 {
     /**
      * Collecting the return from the docblock.
-     * If "Null" is returned it means there is NO return type, if a string is returned there is a return type.
      *
-     * Collecting the return from the docblock, since there can only be one return tag we'll take the first one
-     * from the array and return the type.
+     * @param \phpDocumentor\Reflection\Docblock $docblock
      *
-     * @param \phpDocumentor\Reflection\DocBlock $docBlock
-     *
-     * @return string|null
+     * @return string[]
      */
-    protected function getReturnTypeFromDocblock(DocBlock $docBlock): ?string
+    protected function getReturnTypeFromDocblock(Docblock $docblock): array
     {
-        /** @var \phpDocumentor\Reflection\DocBlock\Tags\Return_[] $returnTags */
-        $returnTags = $docBlock->getTagsByName('return');
+        $helper = new AnalyseDocblockHelper();
 
-        if (count($returnTags) === 0) {
-            return null;
+        /** @var \phpDocumentor\Reflection\DocBlock\Tags\Return_[] $tags */
+        $tags = $docblock->getTagsByName('return');
+
+        foreach ($tags as $tag) {
+            return $helper->getTypeFromDocblock($tag);
         }
 
-        return $returnTags[0]->getType();
+        return [];
     }
 
     /**
-     * Collecting the parameters from the docblock.
+     * Collecting all the parameters from the docblock.
      *
-     * @param \phpDocumentor\Reflection\DocBlock $docBlock
+     * @param DocBlock $docblock
      *
-     * @return array|null
+     * @return \PhpParser\Node\Param[]
      */
-    protected function getParametersFromDocblock(DocBlock $docBlock): ?array
+    protected function getParametersFromDocblock(Docblock $docblock): array
     {
-        return $docBlock->getTagsByName('param');
+        $helper = new AnalyseDocblockHelper();
+
+        $parameters = [];
+
+        /** @var \phpDocumentor\Reflection\DocBlock\Tags\Param[] $tags */
+        $tags = $docblock->getTagsByName('param');
+
+        foreach ($tags as $tag) {
+            $parameters += [$tag->getVariableName() => $helper->getTypeFromDocblock($tag)];
+        }
+
+        return $parameters;
     }
 
     /**
      * Collecting the parameter from the docblock based upon the given parameter.
-     * If "Null" is returned it means there is NO parameter type, if a string is returned there is a parameter type.
+     * Returning an empty array if the parameter is untyped.
      *
-     * @param \phpDocumentor\Reflection\DocBlock $docBlock
+     * @param \phpDocumentor\Reflection\Docblock $docblock
      * @param string                             $parameter
      *
-     * @return string|null
+     * @return string[]
      */
-    protected function getParameterTypeFromDocblock(DocBlock $docBlock, string $parameter): ?string
+    protected function getParameterTypeFromDocblock(Docblock $docblock, string $parameter): array
     {
-        /** @var \phpDocumentor\Reflection\DocBlock\Tags\Param[] $parameterTags */
-        $parameterTags = $docBlock->getTagsByName('param');
+        $helper = new AnalyseDocblockHelper();
 
-        foreach ($parameterTags as $parameterTag) {
+        /** @var \phpDocumentor\Reflection\DocBlock\Tags\Param[] $tags */
+        $tags = $docblock->getTagsByName('param');
+
+        foreach ($tags as $tag) {
             // Validating whether the parameter tag has a type based upon the given type.
-            if ($parameterTag->getVariableName() !== $parameter) {
+            if ($tag->getVariableName() !== $parameter) {
                 continue;
             }
 
-            return $parameterTag->getType();
+            return $helper->getTypeFromDocblock($tag);
         }
 
-         // No parameter found which matches the given parameter, returning null.
-        return null;
+        // No types are configured for this parameter, an empty array will be returned.
+        return [];
     }
 
     /**
@@ -86,39 +99,41 @@ trait AnalyseDocblockTrait
      * Collecting the property from the docblock, since there can only be one property tag we'll take the first one
      * from the array and property the type.
      *
-     * @param \phpDocumentor\Reflection\DocBlock $docBlock
+     * @param \phpDocumentor\Reflection\Docblock $docblock
      *
-     * @return string|null
+     * @return string[]
      */
-    protected function getPropertyTypeFromDocblock(DocBlock $docBlock): ?string
+    protected function getPropertyTypeFromDocblock(Docblock $docblock): array
     {
-        /** @var \phpDocumentor\Reflection\DocBlock\Tags\Property[] $propertyTags */
-        $propertyTags = $docBlock->getTagsByName('var');
+        $helper = new AnalyseDocblockHelper();
 
-        if (count($propertyTags) === 0) {
-            return null;
+        /** @var \phpDocumentor\Reflection\DocBlock\Tags\Property[] $tags */
+        $tags = $docblock->getTagsByName('var');
+
+        foreach ($tags as $tag) {
+            return $helper->getTypeFromDocblock($tag);
         }
 
-        return $propertyTags[0]->getType();
+        return [];
     }
 
     /**
      * Validating whether the docblock is suppressed by "inheritdoc" (Parent class docblock).
      *
-     * @param \phpDocumentor\Reflection\DocBlock $docBlock
+     * @param \phpDocumentor\Reflection\Docblock $docblock
      *
      * @return bool
      */
-    protected function isSuppressedByInheritDoc(DocBlock $docBlock): bool
+    protected function isSuppressedByInheritDoc(Docblock $docblock): bool
     {
         $inheritdoc = ['{@inheritdoc}', '@inheritdoc', 'inheritdoc'];
 
-        if (in_array(strtolower($docBlock->getSummary()), $inheritdoc)) {
+        if (in_array(strtolower($docblock->getSummary()), $inheritdoc)) {
             return true;
         }
 
-        foreach ($docBlock->getDescription()->getTags() as $tag) {
-            $matchesTags = in_array(strtolower($docBlock->getSummary()), $inheritdoc);
+        foreach ($docblock->getDescription()->getTags() as $tag) {
+            $matchesTags = in_array(strtolower($docblock->getSummary()), $inheritdoc);
 
             if ($tag instanceof Generic && $matchesTags) {
                 return true;
@@ -136,17 +151,17 @@ trait AnalyseDocblockTrait
      * If the parameter argument is set the validation will analyse that specific parameter name.
      * Because validating all parameters is not the most effective way to approach the analysis.
      *
-     * @param \phpDocumentor\Reflection\DocBlock $docBlock
+     * @param \phpDocumentor\Reflection\DocBlock $docblock
      * @param string                             $type
      * @param string|null                        $parameter
      *
      * @return bool
      * @throws \Exception
      */
-    protected function isSuppressedByType(DocBlock $docBlock, string $type, ?string $parameter = null): bool
+    protected function isSuppressedByType(Docblock $docblock, string $type, ?string $parameter = null): bool
     {
         /** @var \phpDocumentor\Reflection\DocBlock\Tags\Property[] $tags */
-        $tags = $docBlock->getTagsByName($type);
+        $tags = $docblock->getTagsByName($type);
 
         foreach ($tags as $tag) {
             // The parameter analysis deviates from the default analysis.
