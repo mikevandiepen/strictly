@@ -89,11 +89,15 @@ final class StrictlyCommand extends Command
             $projectIssueCount += $fileIssueCount;
             $table->render();
 
-            $output->writeln('<error>[issues file]: ' . $fileIssueCount . '</error>');
+            if ($fileIssueCount > 0) {
+                $output->writeln('<comment>[issues file]: ' . $fileIssueCount . '</comment>');
+            } else {
+                $output->writeln('<info>[No issues found]</info>');
+            }
             $output->writeln('');
         }
 
-        $output->writeln('<error>[Issues total]: ' . $projectIssueCount . '</error>');
+        $output->writeln('<comment>[Issues total]: ' . $projectIssueCount . '</comment>');
     }
 
     /**
