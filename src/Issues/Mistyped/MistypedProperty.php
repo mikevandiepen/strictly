@@ -21,5 +21,5 @@ final class MistypedProperty extends AbstractIssue implements IssueInterface, Mi
     public const SEVERITY = Severity::ALERT;
 
     /** @var string The message which the user will be prompted with. */
-    public const MESSAGE = 'Incorrect property type in the docblock!';
+    public const MESSAGE = 'Incorrect property type in either the docblock or functional code';
 }

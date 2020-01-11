@@ -22,5 +22,5 @@ final class UntypedParameterFunctional extends AbstractIssue implements IssueInt
     public const SEVERITY = Severity::WARNING;
 
     /** @var string The message which the user will be prompted with. */
-    public const MESSAGE = 'Undeclared parameter type in the functional code!';
+    public const MESSAGE = 'Undeclared parameter type in the functional code';
 }

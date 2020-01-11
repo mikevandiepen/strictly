@@ -22,5 +22,5 @@ final class UntypedReturnDocblock extends AbstractIssue implements IssueInterfac
     public const SEVERITY = Severity::ALERT;
 
     /** @var string The message which the user will be prompted with. */
-    public const MESSAGE = 'Undeclared return type in the docblock!';
+    public const MESSAGE = 'Undeclared return type in the docblock';
 }

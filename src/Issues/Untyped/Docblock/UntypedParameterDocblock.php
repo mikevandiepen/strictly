@@ -22,5 +22,5 @@ final class UntypedParameterDocblock extends AbstractIssue implements IssueInter
     public const SEVERITY = Severity::ALERT;
 
     /** @var string The message which the user will be prompted with. */
-    public const MESSAGE = 'Undeclared parameter type in the docblock!';
+    public const MESSAGE = 'Undeclared parameter type in the docblock';
 }

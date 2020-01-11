@@ -21,5 +21,5 @@ final class MistypedParameter extends AbstractIssue implements IssueInterface, M
     public const SEVERITY = Severity::ALERT;
 
     /** @var string The message which the user will be prompted with. */
-    public const MESSAGE = 'Incorrect parameter type in the docblock!';
+    public const MESSAGE = 'Incorrect parameter type in either the docblock or functional code';
 }

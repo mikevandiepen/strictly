@@ -22,5 +22,5 @@ final class UntypedReturnFunctional extends AbstractIssue implements IssueInterf
     public const SEVERITY = Severity::WARNING;
 
     /** @var string The message which the user will be prompted with. */
-    public const MESSAGE = 'Undeclared return type in the functional code!';
+    public const MESSAGE = 'Undeclared return type in the functional code';
 }
