@@ -1,10 +1,7 @@
 project:
-    analysers:
-        enabled:
-            - *
     directories:
         include:
-            - 'src'
+            - 'src/'
         exclude:
-            - 'tests'
-            - 'vendor'
+            - 'tests/'
+            - 'vendor/'

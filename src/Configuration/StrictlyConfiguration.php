@@ -99,6 +99,7 @@ final class StrictlyConfiguration
      */
     public function __construct()
     {
+        $this->finder = new Finder();
         $this->configuration = Yaml::parseFile(self::STRICTLY_CONFIGURATION_FILE);
     }
 
@@ -233,7 +234,7 @@ final class StrictlyConfiguration
      */
     private function getIncludedDirectories(): array
     {
-        return $this->configuration['project']['directories']['included'];
+        return $this->configuration['project']['directories']['include'] ?? array();
     }
 
     /**
@@ -243,6 +244,6 @@ final class StrictlyConfiguration
      */
     private function getExcludedDirectories(): array
     {
-        return $this->configuration['project']['directories']['excluded'];
+        return $this->configuration['project']['directories']['exclude'] ?? array();
     }
 }

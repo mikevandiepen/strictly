@@ -50,7 +50,7 @@ final class StrictlyCommand extends Command
             $analyserStrategy = new Director($file);
             $analyserStrategy->direct($configuration->getAnalysers());
 
-            $output->writeln('Analysed file: [' . $file->fileName . '] - size: ' . $file->fileSize);
+            $output->writeln('Analysed file: [' . $file->fileName . '] - File size: ' . $file->fileSize);
 
             $table = new Table($output);
             $table->setHeaders(['Severity', 'Identifier', 'Line', 'Name', 'Issue']);
@@ -71,6 +71,7 @@ final class StrictlyCommand extends Command
             $projectIssueCount += $fileIssueCount;
 
             $output->writeln('[issues file]: ' . $fileIssueCount);
+            $output->writeln('');
         }
 
         $output->writeln('[Issues total]: ' . $projectIssueCount);

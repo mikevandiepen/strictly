@@ -106,7 +106,7 @@ final class File
         $this->fileName = $file->getFilename();
         $this->fileSize = $file->getSize();
 
-        $parser = (new ParserFactory)->create(ParserFactory::ONLY_PHP7);
+        $parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
         $nodes = $parser->parse($file->getContents());
 
         // Iterating through all the nodes and validating whether the analyser exists.

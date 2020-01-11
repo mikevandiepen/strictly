@@ -29,10 +29,8 @@
         "symfony/process": "^4.3",
         "nikic/php-parser": "^4.2",
         "symfony/stopwatch": "^4.3",
+        "mikevandiepen/strictly": "dev-master",
         "phpdocumentor/reflection-docblock": "^4.3"
-    },
-    "require-dev": {
-        "mikevandiepen/strictly": "dev-master"
     },
     "bin": ["bin/strictly"]
 }
