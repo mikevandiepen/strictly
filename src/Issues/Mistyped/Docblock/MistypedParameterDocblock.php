@@ -16,7 +16,7 @@ use Mediadevs\Strictly\Issues\Contracts\DocblockInterface;
 final class MistypedParameterDocblock extends AbstractIssue implements IssueInterface, MistypedInterface, DocblockInterface
 {
     /** @var string How the issue will be identified. */
-    public const IDENTIFIER = 'mistyped-property-docblock';
+    public const IDENTIFIER = 'mistyped-parameter-docblock';
 
     /** @var int How severe the current issue is. */
     public const SEVERITY = Severity::ALERT;
