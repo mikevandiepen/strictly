@@ -48,6 +48,8 @@ final class StrictlyCommand extends Command
             $file = new File($configurationFile);
 
             $analyserStrategy = new Director($file);
+            print_r($configuration->getAnalysers());
+            exit();
             $analyserStrategy->direct($configuration->getAnalysers());
 
             $output->writeln('Analysed file: [' . $file->fileName . '] - File size: ' . $file->fileSize);

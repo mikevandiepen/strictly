@@ -148,6 +148,14 @@ final class StrictlyConfiguration
         $enabledAnalysers = $this->getEnabledAnalysers() ?? false;
         $disabledAnalysers = $this->getDisabledAnalysers() ?? false;
 
+        // Whether the all ( * ) scope is set.
+        if ($enabledAnalysers && in_array('*', $enabledAnalysers)) {
+            $enabledAnalysers = self::STRICTLY_ANALYSER_OPTIONS;
+        }
+        if ($disabledAnalysers && in_array('*', $disabledAnalysers)) {
+            $disabledAnalysers = self::STRICTLY_ANALYSER_OPTIONS;
+        }
+
         // There are enabled and disabled analysers configured.
         // We will return the base analysers plus the enabled analysers minus the disabled analysers.
         if ($enabledAnalysers && $disabledAnalysers) {
@@ -160,7 +168,7 @@ final class StrictlyConfiguration
 
             // Removing the disabled analysers from the enabled and base analysers list.
             foreach ($disabledAnalysers as $disabledAnalyser) {
-                unset($analysers[$disabledAnalyser]);
+                $analysers = array_diff($analysers, [$disabledAnalyser]);
             }
         }
 
