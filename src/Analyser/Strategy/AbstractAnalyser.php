@@ -61,7 +61,7 @@ abstract class AbstractAnalyser
      *
      * @param AbstractNode $node
      */
-    public function __construct($node)
+    public function __construct(AbstractNode $node)
     {
         // The node is an instance off AbstractNode.
         $this->node = $node;
@@ -85,6 +85,8 @@ abstract class AbstractAnalyser
     }
 
     /**
+     * Collecting the issues from the child analyser.
+     *
      * @return IssueInterface[]
      */
     public function getIssues(): array

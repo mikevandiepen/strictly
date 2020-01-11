@@ -3,8 +3,8 @@
 namespace Mediadevs\Strictly\Parser\File;
 
 use PhpParser\Node;
-use phpDocumentor\Reflection\DocBlock;
-use phpDocumentor\Reflection\DocBlockFactory;
+use phpDocumentor\Reflection\Docblock;
+use phpDocumentor\Reflection\DocblockFactory;
 
 /**
  * Class AbstractNode.
@@ -16,14 +16,14 @@ abstract class AbstractNode
     /**
      * The node which will be subject to preparation.
      *
-     * @var \PhpParser\Node
+     * @var Node
      */
     protected Node $node;
 
     /**
      * AbstractNode constructor.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      */
     public function __construct(Node $node)
     {
@@ -33,7 +33,7 @@ abstract class AbstractNode
     /**
      * Collecting the node of the child.
      *
-     * @return \PhpParser\Node
+     * @return Node
      */
     public function getNode(): Node
     {
@@ -43,7 +43,7 @@ abstract class AbstractNode
     /**
      * Collecting the functional code of the node.
      *
-     * @return \PhpParser\Node
+     * @return Node
      */
     public function getFunctionalCode(): Node
     {
@@ -53,9 +53,9 @@ abstract class AbstractNode
     /**
      * Collecting the docblock of the node.
      *
-     * @return \phpDocumentor\Reflection\DocBlock
+     * @return Docblock
      */
-    public function getDocblock(): DocBlock
+    public function getDocblock(): Docblock
     {
         $docblock = $this->node->getDocComment() !== null ? $this->node->getDocComment()->getText() : '/** */';
 
