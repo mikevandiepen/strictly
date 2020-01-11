@@ -30,7 +30,7 @@ trait AnalyseParametersTrait
      *
      * @return string|null
      */
-    protected function getParameterType(Node\Param $node): ?string
+    protected function getParameterType(Node $node): ?string
     {
         return $node->getType() ? $node->getType() : null;
     }

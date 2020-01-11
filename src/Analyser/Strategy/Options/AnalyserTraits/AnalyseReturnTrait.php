@@ -3,6 +3,7 @@
 namespace Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits;
 
 use \PhpParser\Node;
+use PhpParser\Node\Identifier;
 
 /**
  * Trait AnalyseReturnTrait.
@@ -16,9 +17,9 @@ trait AnalyseReturnTrait
      *
      * @param \PhpParser\Node $node
      *
-     * @return string|null
+     * @return null|Identifier|Node\Name|Node\NullableType|Node\UnionType
      */
-    protected function getReturnType(Node $node): ?string
+    protected function getReturnType(Node $node)
     {
         return $node->getReturnType();
     }

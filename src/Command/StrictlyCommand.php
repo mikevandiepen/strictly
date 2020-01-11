@@ -61,11 +61,11 @@ final class StrictlyCommand extends Command
                 $fileIssueCount++;
 
                 $table->addRow([
-                    $issue::Severity,
-                    $issue::Identifier,
+                    $issue::SEVERITY,
+                    $issue::IDENTIFIER,
                     $issue->getLine(),
-                    $issue->getFaultyNode(),
-                    $issue::Message
+                    $issue->getName(),
+                    $issue::MESSAGE
                 ]);
             }
             $projectIssueCount += $fileIssueCount;

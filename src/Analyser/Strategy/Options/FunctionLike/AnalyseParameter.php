@@ -44,7 +44,7 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
 
         foreach ($functional->getParams() as $functionalParameter) {
             // Binding the functional type.
-            $this->setFunctionalType($this->getParameterType($functionalParameter->type));
+            $this->setFunctionalType($this->getParameterType($functionalParameter));
 
             if (!$this->functionalTypeIsset()) {
                 $this->addIssue((new UntypedParameterFunctional())
@@ -68,7 +68,7 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
 
         foreach ($this->getParametersFromDocblock($docblock) as $docblockParameter) {
             // Binding the docblock type.
-            $this->setDocblockType($docblockParameter->type);
+            $this->setDocblockType($docblockParameter);
 
             if (!$this->docblockTypeIsset()) {
                 $this->addIssue((new UntypedParameterDocblock())
@@ -92,7 +92,7 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
 
         foreach ($this->getParameters($functional) as $functionalParameter) {
             // Binding types from the functional code and the docblock.
-            $this->setFunctionalType($this->getParameterType($functionalParameter->type));
+            $this->setFunctionalType($this->getParameterType($functionalParameter));
             $this->setDocblockType($this->getParameterTypeFromDocblock($docblock, $functionalParameter->var));
 
             if ($this->functionalTypeIsset() && $this->docblockTypeIsset()) {

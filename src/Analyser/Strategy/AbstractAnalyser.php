@@ -2,6 +2,8 @@
 
 namespace Mediadevs\Strictly\Analyser\Strategy;
 
+use \PhpParser\Node;
+use PhpParser\Node\Identifier;
 use Mediadevs\Strictly\Parser\File\AbstractNode;
 use Mediadevs\Strictly\Issues\Contracts\IssueInterface;
 
@@ -22,9 +24,9 @@ abstract class AbstractAnalyser
     /**
      * The type which has been hinted in the functional code.
      *
-     * @var string|null
+     * @var string|Identifier|Node\Name|Node\NullableType|Node\UnionType|null
      */
-    protected ?string $functionalType;
+    protected $functionalType;
 
     /**
      * The type which has been hinted in the docblock.
@@ -38,7 +40,7 @@ abstract class AbstractAnalyser
      *
      * @var IssueInterface[]
      */
-    private array $issues;
+    private array $issues = [];
 
     /**
      * AbstractAnalyser constructor.
@@ -93,11 +95,11 @@ abstract class AbstractAnalyser
     /**
      * Setting the type of the functional code, this type will later be used for analysis.
      *
-     * @param string|null $type
+     * @param string|Identifier|Node\Name|Node\NullableType|Node\UnionType|null $type
      *
      * @return void
      */
-    protected function setFunctionalType(?string $type): void
+    protected function setFunctionalType($type): void
     {
         $this->functionalType = $type;
     }
