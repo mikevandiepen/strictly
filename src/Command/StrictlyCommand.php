@@ -134,10 +134,86 @@ final class StrictlyCommand extends Command
     {
         $table->setHeaders(['Severity', 'Issue']);
 
-        $table->addRow([
-            $severity,
-            sprintf($issue::SIMPLE_MESSAGE, $issue->getName(), $issue->getLine(), $issue->getType()),
-        ]);
+        // Generating the message configuration based upon the issue.
+        switch ($issue::IDENTIFIER) {
+            case 'mistyped-property':
+                $message = sprintf(
+                    $issue::SIMPLE_MESSAGE,
+                    $issue->getName(),
+                    $issue->getLine(),
+                    $issue->getType()
+                );
+                break;
+            case 'mistyped-parameter':
+                $message = sprintf(
+                    $issue::SIMPLE_MESSAGE,
+                    $issue->getParameter(),
+                    $issue->getName(),
+                    $issue->getLine(),
+                    $issue->getType()
+                );
+                break;
+            case 'mistyped-return':
+                $message = sprintf(
+                    $issue::SIMPLE_MESSAGE,
+                    $issue->getName(),
+                    $issue->getLine(),
+                    $issue->getType()
+                );
+                break;
+            case 'untyped-property-docblock':
+                $message = sprintf(
+                    $issue::SIMPLE_MESSAGE,
+                    $issue->getName(),
+                    $issue->getLine(),
+                    $issue->getType()
+                );
+                break;
+            case 'untyped-parameter-docblock':
+                $message = sprintf(
+                    $issue::SIMPLE_MESSAGE,
+                    $issue->getName(),
+                    $issue->getLine(),
+                    $issue->getType()
+                );
+                break;
+            case 'untyped-return-docblock':
+                $message = sprintf(
+                    $issue::SIMPLE_MESSAGE,
+                    $issue->getName(),
+                    $issue->getLine(),
+                    $issue->getType()
+                );
+                break;
+            case 'untyped-property-functional':
+                $message = sprintf(
+                    $issue::SIMPLE_MESSAGE,
+                    $issue->getName(),
+                    $issue->getLine(),
+                    $issue->getType()
+                );
+                break;
+            case 'untyped-parameter-functional':
+                $message = sprintf(
+                    $issue::SIMPLE_MESSAGE,
+                    $issue->getName(),
+                    $issue->getLine(),
+                    $issue->getType()
+                );
+                break;
+            case 'untyped-return-functional':
+                $message = sprintf(
+                    $issue::SIMPLE_MESSAGE,
+                    $issue->getName(),
+                    $issue->getLine(),
+                    $issue->getType()
+                );
+                break;
+            default:
+                $message = 'Issue message not found.';
+        }
+
+        $table->addRow([$severity, $message]);
 
         return $table;
     }
