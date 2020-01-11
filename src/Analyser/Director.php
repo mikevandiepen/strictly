@@ -3,13 +3,13 @@
 namespace Mediadevs\Strictly\Analyser;
 
 use Mediadevs\Strictly\Parser\File;
+use Mediadevs\Strictly\Issues\IssueInterface;
 use Mediadevs\Strictly\Parser\File\MethodNode;
 use Mediadevs\Strictly\Parser\File\ClosureNode;
 use Mediadevs\Strictly\Parser\File\PropertyNode;
 use Mediadevs\Strictly\Parser\File\FunctionNode;
 use Mediadevs\Strictly\Parser\File\MagicMethodNode;
 use Mediadevs\Strictly\Parser\File\ArrowFunctionNode;
-use Mediadevs\Strictly\Issues\Contracts\IssueInterface;
 use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyseMethod;
 use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyseClosure;
 use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyseProperty;

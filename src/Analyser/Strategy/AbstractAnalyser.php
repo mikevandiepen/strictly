@@ -5,7 +5,7 @@ namespace Mediadevs\Strictly\Analyser\Strategy;
 use \PhpParser\Node;
 use PhpParser\Node\Identifier;
 use Mediadevs\Strictly\Parser\File\AbstractNode;
-use Mediadevs\Strictly\Issues\Contracts\IssueInterface;
+use Mediadevs\Strictly\Issues\IssueInterface;
 
 /**
  * Class AbstractAnalyser

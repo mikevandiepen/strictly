@@ -3,17 +3,14 @@
 namespace Mediadevs\Strictly\Issues\Untyped\Functional;
 
 use Mediadevs\Strictly\Issues\Severity;
-use Mediadevs\Strictly\Issues\AbstractIssue;
-use Mediadevs\Strictly\Issues\Contracts\IssueInterface;
-use Mediadevs\Strictly\Issues\Contracts\UntypedInterface;
-use Mediadevs\Strictly\Issues\Contracts\FunctionalInterface;
+use Mediadevs\Strictly\Issues\IssueInterface;
 
 /**
  * Class UntypedReturnFunctional.
  *
  * @package Mediadevs\Strictly\Issues\Untyped\Functional
  */
-final class UntypedReturnFunctional extends AbstractIssue implements IssueInterface, UntypedInterface, FunctionalInterface
+final class UntypedReturnFunctional extends AbstractUntypedFunctionalIssue implements IssueInterface
 {
     /** @var string How the issue will be identified. */
     public const IDENTIFIER = 'untyped-return-functional';

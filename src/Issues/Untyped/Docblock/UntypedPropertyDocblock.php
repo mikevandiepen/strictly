@@ -3,17 +3,14 @@
 namespace Mediadevs\Strictly\Issues\Untyped\Docblock;
 
 use Mediadevs\Strictly\Issues\Severity;
-use Mediadevs\Strictly\Issues\AbstractIssue;
-use Mediadevs\Strictly\Issues\Contracts\IssueInterface;
-use Mediadevs\Strictly\Issues\Contracts\UntypedInterface;
-use Mediadevs\Strictly\Issues\Contracts\DocblockInterface;
+use Mediadevs\Strictly\Issues\IssueInterface;
 
 /**
  * Class UntypedPropertyDocblock.
  *
  * @package Mediadevs\Strictly\Issues\Untyped\Docblock
  */
-final class UntypedPropertyDocblock extends AbstractIssue implements IssueInterface, UntypedInterface, DocblockInterface
+final class UntypedPropertyDocblock extends AbstractUntypedDocblockIssue implements IssueInterface
 {
     /** @var string How the issue will be identified. */
     public const IDENTIFIER = 'untyped-property-docblock';

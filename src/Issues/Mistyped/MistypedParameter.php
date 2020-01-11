@@ -3,16 +3,14 @@
 namespace Mediadevs\Strictly\Issues\Mistyped;
 
 use Mediadevs\Strictly\Issues\Severity;
-use Mediadevs\Strictly\Issues\AbstractIssue;
-use Mediadevs\Strictly\Issues\Contracts\IssueInterface;
-use Mediadevs\Strictly\Issues\Contracts\MistypedInterface;
+use Mediadevs\Strictly\Issues\IssueInterface;
 
 /**
  * Class MistypedParameter.
  *
  * @package Mediadevs\Strictly\Issues\Mistyped
  */
-final class MistypedParameter extends AbstractIssue implements IssueInterface, MistypedInterface
+final class MistypedParameter extends AbstractMistypedIssue implements IssueInterface
 {
     /** @var string How the issue will be identified. */
     public const IDENTIFIER = 'mistyped-parameter';
