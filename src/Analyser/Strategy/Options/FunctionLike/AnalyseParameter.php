@@ -62,7 +62,7 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
                     ->setName($this->functional->name)
                     ->setLine($this->functional->getStartLine())
                     ->setType($this->getMissingTypeFromDocblock())
-                    ->setParameter('temporary_parameter')
+                    ->setParameter($parameter)
                 );
             }
         }
@@ -85,7 +85,7 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
                     ->setName($this->functional->name)
                     ->setLine($this->functional->getStartLine())
                     ->setType($this->getMissingTypeFromNode())
-                    ->setParameter('temporary_parameter')
+                    ->setParameter($parameter)
                 );
             }
         }
@@ -109,7 +109,7 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
                         ->setName($this->functional->name)
                         ->setLine($this->functional->getStartLine())
                         ->setType($this->getMissingTypeFromNode())
-                        ->setParameter('temporary_parameter')
+                        ->setParameter($parameter)
                     );
                 }
             } elseif ($this->functionalTypeIsset() && !$this->docblockTypeIsset()) {
@@ -117,27 +117,27 @@ final class AnalyseParameter extends AbstractAnalyser implements AnalyserInterfa
                     ->setName($this->functional->name)
                     ->setLine($this->functional->getStartLine())
                     ->setType($this->getMissingTypeFromNode())
-                    ->setParameter('temporary_parameter')
+                    ->setParameter($parameter)
                 );
             } elseif (!$this->functionalTypeIsset() && $this->docblockTypeIsset()) {
                 $this->addIssue((new UntypedParameterFunctional())
                     ->setName($this->functional->name)
                     ->setLine($this->functional->getStartLine())
                     ->setType($this->getMissingTypeFromDocblock())
-                    ->setParameter('temporary_parameter')
+                    ->setParameter($parameter)
                 );
             } else {
                 $this->addIssue((new UntypedParameterFunctional())
                     ->setName($this->functional->name)
                     ->setLine($this->functional->getStartLine())
                     ->setType([] /** TODO: Create an analyser which analyses the body to assert the parameter type */)
-                    ->setParameter('temporary_parameter')
+                    ->setParameter($parameter)
                 );
                 $this->addIssue((new UntypedParameterDocblock())
                     ->setName($this->functional->name)
                     ->setLine($this->functional->getStartLine())
                     ->setType([] /** TODO: Create an analyser which analyses the body to assert the parameter type */)
-                    ->setParameter('temporary_parameter')
+                    ->setParameter($parameter)
                 );
             }
         }
