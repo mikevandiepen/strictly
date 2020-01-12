@@ -139,7 +139,9 @@ final class StrictlyCommand extends Command
      */
     private function abstractIssue(Table $table, AbstractIssue $issue, string $severity): Table
     {
-        $table->setHeaders(['Line', 'Location', 'Severity', 'Identifier', 'Name', 'Issue', 'Suggested type']);
+        $table->setHeaders(['Line', 'Location', 'Severity', 'Identifier', 'Name', 'Issue', 'Suggested type', 'parameter']);
+
+        $parameter = $issue->getParameter() !== null ? '$' . $issue->getParameter() : '';
 
         $table->addRow([
             $issue->getLine(),
@@ -149,6 +151,7 @@ final class StrictlyCommand extends Command
             $issue->getName(),
             $issue::ABSTRACT_MESSAGE,
             $issue->getType(),
+            $parameter
         ]);
 
         return $table;

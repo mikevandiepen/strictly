@@ -33,9 +33,9 @@ abstract class AbstractIssue
     /**
      * The parameter which the node should have.
      *
-     * @var string
+     * @var string|null
      */
-    private string $parameter;
+    private ?string $parameter = null;
 
     /**
      * Setting the line for the issue.
@@ -126,9 +126,9 @@ abstract class AbstractIssue
     /**
      * Getting the parameter for the issue.
      *
-     * @return string
+     * @return string|null
      */
-    public function getParameter(): string
+    public function getParameter(): ?string
     {
         return $this->parameter;
     }
