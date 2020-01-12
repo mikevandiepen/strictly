@@ -26,10 +26,10 @@ final class AnalyseDocblockHelper
 
         if ($tag->getType() instanceof Compound) {
             foreach (explode('|' , $tag->getType()) as $tagType) {
-                $type[] = $tagType;
+                $type[] = ltrim($tagType, '\\');
             }
         } else {
-            $type[] = $tag->getType();
+            $type[] = ltrim($tag->getType(), '\\');
         }
 
         return $type;

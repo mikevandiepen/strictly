@@ -99,7 +99,7 @@ final class File
      * File constructor.
      * Handling the file and sorting the nodes into the correct node group.
      *
-     * @param \Symfony\Component\Finder\SplFileInfo $file
+     * @param SplFileInfo $file
      */
     public function __construct(SplFileInfo $file)
     {
@@ -118,7 +118,7 @@ final class File
     /**
      * Analysing the node and storing the node in the right node-group.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return void
      */
@@ -182,7 +182,7 @@ final class File
     /**
      * Whether the node is an instance of assign.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return bool
      */
@@ -194,7 +194,7 @@ final class File
     /**
      * Whether the node is an instance of Class.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return bool
      */
@@ -206,7 +206,7 @@ final class File
     /**
      * Whether the node falls in the callable group.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return bool
      */
@@ -222,7 +222,7 @@ final class File
     /**
      * Whether the node is an instance of expression.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return bool
      */
@@ -235,7 +235,7 @@ final class File
     /**
      * Whether the node is an instance of functionLike.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return bool
      */
@@ -247,7 +247,7 @@ final class File
     /**
      * Whether the node is an instance of function.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return bool
      */
@@ -259,7 +259,7 @@ final class File
     /**
      * Whether the node is an arrow function.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return bool
      */
@@ -271,7 +271,7 @@ final class File
     /**
      * Whether the node is an instance of closure.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return bool
      */
@@ -283,7 +283,7 @@ final class File
     /**
      * Whether the node is an instance of method.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return bool
      */
@@ -295,7 +295,7 @@ final class File
     /**
      * Whether the node is an instance of (magic) method.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return bool
      */
@@ -307,7 +307,7 @@ final class File
     /**
      * Whether the node is an instance of property.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return bool
      */
@@ -319,7 +319,7 @@ final class File
     /**
      * Whether the node is an instance of property.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return bool
      */
@@ -331,7 +331,7 @@ final class File
     /**
      * Parsing the sub nodes of the parent node.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return void
      */
@@ -348,7 +348,7 @@ final class File
     /**
      * Parsing the properties from the property group.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return void
      */
@@ -362,7 +362,7 @@ final class File
     /**
      * Parsing the arguments of the parent node.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return void
      */

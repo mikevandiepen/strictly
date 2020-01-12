@@ -48,7 +48,7 @@ final class AnalyseFunctionalHelper
             }
         } else {
             if ($node instanceof Node\Identifier) {
-                $types[] = $node->name;
+                $types[] = ltrim($node->name, '\\');
             }
 
             if ($node instanceof Node\Name) {

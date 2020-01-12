@@ -15,9 +15,9 @@ trait AnalyseParametersTrait
     /**
      * Collecting all the parameters from a "function like" node.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
-     * @return \PhpParser\Node\Param[]
+     * @return Node\Param[]
      */
     protected function getParametersFromNode(Node $node): array
     {
@@ -51,7 +51,7 @@ trait AnalyseParametersTrait
      * Extracting the name from the node.
      * When the parameter name is not defined this string will be returned.
      *
-     * @param \PhpParser\Node $parameter
+     * @param Node $parameter
      *
      * @return string
      */

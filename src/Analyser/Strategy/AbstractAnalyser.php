@@ -2,7 +2,7 @@
 
 namespace Mediadevs\Strictly\Analyser\Strategy;
 
-use \PhpParser\Node;
+use PhpParser\Node;
 use phpDocumentor\Reflection\DocBlock;
 use Mediadevs\Strictly\Issues\IssueInterface;
 use Mediadevs\Strictly\Parser\File\AbstractNode;
@@ -17,7 +17,7 @@ abstract class AbstractAnalyser
     /**
      * The functional code.
      *
-     * @var \PhpParser\Node
+     * @var Node
      */
     protected Node $functional;
 

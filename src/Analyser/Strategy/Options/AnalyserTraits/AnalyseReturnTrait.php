@@ -2,7 +2,7 @@
 
 namespace Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserTraits;
 
-use \PhpParser\Node;
+use PhpParser\Node;
 use Mediadevs\Strictly\Analyser\Strategy\Options\AnalyserHelpers\AnalyseFunctionalHelper;
 
 /**
@@ -15,7 +15,7 @@ trait AnalyseReturnTrait
     /**
      * Collecting all the parameters from a "function like" node.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return string[]
      */

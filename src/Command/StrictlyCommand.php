@@ -19,8 +19,26 @@ use Mediadevs\Strictly\Configuration\StrictlyConfiguration;
  */
 final class StrictlyCommand extends Command
 {
-    // the name of the command (the part after "bin/console")
+    /**
+     * How the analysis command is run.
+     * (php bin/strictly) in this case.
+     *
+     * @var string
+     */
     protected static $defaultName = 'strictly';
+
+    /**
+     * The configuration for the format option.
+     *
+     * @var array
+     */
+    private array $outputOption = [
+        'name'          => 'output',
+        'shortcut'      => 'o',
+        'mode'          => InputOption::VALUE_REQUIRED,
+        'description'   => 'How the output should be formatted.',
+        'default'       => 'abstract',
+    ];
 
     /**
      * Configuring the command.
@@ -29,9 +47,16 @@ final class StrictlyCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setDescription('Analysing the strictness of your project.');
-        $this->setHelp('This command allows you to analyse your project and assert the strictness of your code.');
-        $this->addOption('format', null, InputOption::VALUE_REQUIRED, 'format can be either detailed or abstract', 'simple');
+        $this
+            ->setDescription('Analysing the strictness of your project.')
+            ->setHelp('This command allows you to analyse your project and assert the strictness of your code.')
+            ->addOption(
+                $this->outputOption['name'],
+                $this->outputOption['shortcut'],
+                $this->outputOption['mode'],
+                $this->outputOption['description'],
+                $this->outputOption['default'],
+            );
     }
 
     /**
@@ -75,7 +100,7 @@ final class StrictlyCommand extends Command
                         $severity = 'info';
                 }
 
-                switch ($input->getOption('format')) {
+                switch ($input->getOption('output')) {
                     case 'abstract':
                         $table = $this->abstractIssue($table, $issue, $severity);
                         break;
@@ -83,7 +108,10 @@ final class StrictlyCommand extends Command
                         $table = $this->detailedIssue($table, $issue, $severity);
                         break;
                     default:
-                        $output->writeln(sprintf('<error>%s is not a valid format choice</error>', $input->getOption('format')));
+                        $output->writeln(sprintf(
+                            '<error>%s is not a valid format choice</error>',
+                            $input->getOption('output')
+                        ));
                 }
             }
             $projectIssueCount += $fileIssueCount;

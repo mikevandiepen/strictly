@@ -15,7 +15,7 @@ trait AnalysePropertyTrait
     /**
      * Collecting the property type based upon the node.
      *
-     * @param \PhpParser\Node $node
+     * @param Node $node
      *
      * @return string[]
      */

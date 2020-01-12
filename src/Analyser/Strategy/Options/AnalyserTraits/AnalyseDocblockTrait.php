@@ -45,7 +45,7 @@ trait AnalyseDocblockTrait
      *
      * @param DocBlock $docblock
      *
-     * @return \PhpParser\Node\Param[]
+     * @return Node\Param[]
      */
     protected function getParametersFromDocblock(Docblock $docblock): array
     {

@@ -2,8 +2,6 @@
 
 namespace Mediadevs\Strictly\Analyser\Strategy\Options\FunctionLike;
 
-use PhpParser\Node;
-use phpDocumentor\Reflection\DocBlock;
 use Mediadevs\Strictly\Parser\File\AbstractNode;
 use Mediadevs\Strictly\Issues\Mistyped\MistypedParameter;
 use Mediadevs\Strictly\Analyser\Strategy\AbstractAnalyser;
