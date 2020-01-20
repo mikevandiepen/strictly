@@ -29,6 +29,7 @@
         "symfony/process": "^4.3",
         "nikic/php-parser": "^4.2",
         "symfony/stopwatch": "^4.3",
+        "spatie/array-to-xml": "2.11.*",
         "phpdocumentor/reflection-docblock": "^4.3"
     },
     "bin": ["bin/strictly"]
